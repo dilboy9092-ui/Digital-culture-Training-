@@ -181,6 +181,28 @@ section.in{animation:fadeUp .4s ease}
 .chips button:hover{background:var(--red);color:#fff;border-color:var(--red);transform:translateY(-2px)}
 .ai-input{display:flex;gap:8px}
 .ai-input input{flex:1}
+.ai-status{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--mu);padding:8px 12px;background:var(--bg);border-radius:8px;margin-bottom:10px;border:1px solid var(--bd)}
+.ai-status i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);animation:ldBlink 1.4s infinite;flex:none}
+.ai-status.thinking i{background:var(--gold);box-shadow:0 0 8px var(--gold);animation:ldBlink .6s infinite}
+@keyframes ldBlink{50%{opacity:.2}}
+.chat{max-height:420px;gap:12px}
+.msg{max-width:88%;line-height:1.65;word-wrap:break-word}
+.msg b{color:var(--red)}
+.msg.me b{color:#fff}
+.msg code{background:rgba(0,0,0,.08);padding:1px 6px;border-radius:4px;font-family:Consolas,monospace;font-size:13px;color:var(--red)}
+.msg .ai-src{display:block;font-size:11px;color:var(--mu);margin-top:8px;padding-top:8px;border-top:1px dashed var(--bd)}
+.msg ul.ai-steps{padding-left:18px;margin:6px 0 0}
+.msg ul.ai-steps li{margin:3px 0;font-size:13.5px}
+.msg .ai-typing-dots{display:inline-flex;gap:4px;padding:4px 0}
+.msg .ai-typing-dots span{width:7px;height:7px;border-radius:50%;background:var(--mu);animation:taType 1.3s infinite}
+.msg .ai-typing-dots span:nth-child(2){animation-delay:.18s}
+.msg .ai-typing-dots span:nth-child(3){animation-delay:.36s}
+.msg .ai-related{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.msg .ai-related button{font:inherit;font-size:11.5px;padding:5px 11px;border-radius:20px;border:1px solid var(--bd);background:var(--card);color:var(--tx);cursor:pointer;font-weight:600;transition:.15s}
+.msg .ai-related button:hover{background:var(--red);color:#fff;border-color:var(--red)}
+.ai-input{align-items:flex-end}
+.ai-input textarea{flex:1;min-height:44px;max-height:120px;padding:11px 13px;border:1px solid var(--bd);border-radius:10px;font:inherit;background:var(--bg);color:var(--tx);resize:none}
+.ai-foot{margin-top:8px;text-align:right;font-size:11.5px;color:var(--mu)}
 .stars{display:flex;gap:6px;margin:8px 0 4px}
 .stars button{background:none;border:0;font-size:28px;line-height:1;cursor:pointer;color:var(--bd);transition:transform .15s,color .15s;padding:0}
 .stars button.on{color:var(--gold);animation:pop .35s}
@@ -1518,17 +1540,20 @@ updateHUD();
     <div class="card ai-card">
       <div class="ai-head">
         <div class="ai-ava"><span>🤖</span><i class="ping"></i></div>
-        <div>
+        <div style="flex:1">
           <h2 id="aiTitle"></h2>
           <div class="mu" id="aiSub" style="font-size:13.5px"></div>
         </div>
+        <button type="button" class="btn ghost" id="aiClear" style="padding:7px 12px;font-size:12px">⟳ New</button>
       </div>
+      <div class="ai-status" id="aiStatus"><i></i> <span>Ready</span></div>
       <div class="chat" id="chat"></div>
       <div class="chips" id="aiChips"></div>
       <div class="ai-input">
-        <input id="aiIn" autocomplete="off">
-        <button class="btn sm" id="aiSend">➤</button>
+        <textarea id="aiIn" rows="1" autocomplete="off"></textarea>
+        <button class="btn sm" id="aiSend" type="button">➤</button>
       </div>
+      <div class="ai-foot">⏎ Send · Shift+⏎ New line · Context memory active</div>
     </div>
 
     <div class="card" style="margin-top:14px">
@@ -1594,7 +1619,7 @@ var LY={
 var I={
 si:{sub:'ඩිජිටල් මෙවලම් පුහුණුව ආරම්භ කිරීමට තොරතුරු ඇතුළත් කරන්න.',co:'ආයතනය',oth:'වෙනත් (නම ටයිප් කරන්න)',nm:'නම',ep:'EPF අංකය',ly:'ඔබේ සේවක ස්ථරය',go:'පුහුණුව ආරම්භ කරන්න',note:'ප්‍රගතිය මෙම උපාංගයේ පමණක් සුරැකේ. පුහුණු අන්තර්ගතය MAS කර්මාන්තශාලා සැලැස්මක් මත පදනම් වේ.',out:'ඉවත් වන්න',hi:'ආයුබෝවන්, ',prog:'මුළු ප්‍රගතිය',t1:'මෙවලම්',t2:'සැලැස්ම',t3:'දැනුම',t4:'සහතිකය',t5:'AI සහායක',t6:'විශ්ලේෂණ',star:'★ ප්‍රමුඛ',done:'සම්පූර්ණයි ✓',back:'← මෙවලම් වෙත',who:'කාටද',top:'පුහුණු විෂය මාලාව',fmt:'පුහුණු ආකෘතිය',tips:'අනුගමනය කළ යුතු උපදෙස්',kpi:'සාර්ථකත්ව මිනුම (KPI)',risk:'ඇයි වැදගත් / අවදානම',s1:'විෂය මාලාව සහ උපදෙස් කියවා තේරුම් ගත්තා',s2:'පුහුණු ආකෘතිය අනුව ප්‍රායෝගික අභ්‍යාසය කළා',s3:'ඉහත උපදෙස් දෛනික රාජකාරියේදී අනුගමනය කරන බවට පොරොන්දු වෙමි',ct:'සම්පූර්ණ කිරීමේ සහතිකය',cb1:'මෙයින් සහතික කරනුයේ:',cb2:'ඩිජිටල් මෙවලම් පුහුණුවේ තම ස්ථරයට අදාළ ප්‍රමුඛ මෙවලම් සාර්ථකව සම්පූර්ණ කළ බවයි.',cl:'ඔබේ ස්ථරයේ ★ ප්‍රමුඛ මෙවලම් සියල්ල 100% කළ විට සහතිකය ලැබේ. ඉතිරි: ',pr:'මුද්‍රණය / PDF ලෙස සුරකින්න',e1:'ආයතනයේ නම ඇතුළත් කරන්න.',e2:'කරුණාකර නම ඇතුළත් කරන්න.',e3:'EPF අංකය ඉලක්කම් 3–10 ක් විය යුතුය.',tn:'★ = ඔබේ ස්ථරයට ප්‍රමුඛ මෙවලම්. හැම මෙවලමකම: කරුණු ඉගෙන ගන්න, අභ්‍යාසය කරන්න, quiz එක නිවැරදිව පිළිතුරු දෙන්න.',sg:'සුභ පැතුම්! මෙම මෙවලමේ පුහුණුව සම්පූර්ණයි ✓',
  aiTitle:'AI පුහුණු සහායක',aiSub:'ඔබේ ප්‍රගතිය විශ්ලේෂණය කර පුද්ගලික ප්‍රතිපෝෂණ ලබා දෙයි',
- aiPh:'මොනවද දැනගන්න ඕන? (උදා: SAP, Andon, SharePoint)',
+ aiPh:'උදා: MIGO 101 සහ 122 අතර වෙනස මොකක්ද?',
  aiStart:'ඔබ තවම පුහුණුව ආරම්භ කර නැහැ. "මෙවලම්" ටැබයෙන් ඔබේ ස්ථරයට ප්‍රමුඛ ★ මෙවලමෙන් පටන් ගන්න. මම පියවරෙන් පියවර මඟ පෙන්වන්නම්.',
  aiProg:'ඔබේ සම්පූර්ණ ප්‍රගතිය {p}%. ඉතිරි ප්‍රමුඛ මෙවලම්: {l}. අද එකක් තෝරා පියවර 3 සම්පූර්ණ කර quiz එකට පිළිතුරු දෙන්න.',
  aiPerfect:'අපූරුයි! ප්‍රමුඛ මෙවලම් සියල්ලම සම්පූර්ණයි ({p}%). දැන් "සහතිකය" ටැබයෙන් සහතිකය බාගත කරගන්න පුළුවන්. මේ පුරුදු දිගටම රැක ගන්න!',
@@ -2170,8 +2195,194 @@ function fitCert(){
 }
 
 /* =========================================================
-   AI AGENT + EMPLOYEE FEEDBACK
+   AI COACH v2 + EMPLOYEE FEEDBACK
    ========================================================= */
+var KB={
+'sap-mm':{k:['material master','mm01','mm02','mm03','මාස්ටර්'],si:'Material Master එක SAP MM හි core master data. <b>MM01</b> = create, <b>MM02</b> = change, <b>MM03</b> = display. Views: Basic Data, Purchasing, MRP, Plant Stock, Accounting. Plant + Storage Location දෙකම අනිවාර්යයෙන් පුරවන්න.',en:'Material Master is core MM data. MM01/MM02/MM03 = create/change/display.',ta:'Material Master — MM01 create / MM02 change / MM03 display.',steps:['MM01 → Industry sector','Material Type (FERT/HALB/ROH)','Select views','Enter Plant + Storage Location','Save'],src:'SAP MM · Material Master',rel:['sap-bom','sap-mrp','sap-vendor']},
+'sap-vendor':{k:['vendor','supplier','xk01','xk02','බෙදාහරින්නා'],si:'Vendor Master: <b>XK01</b> (create), <b>XK02</b> (change), <b>XK03</b> (display). Company code + Purchasing org + Reconciliation account අනිවාර්යයි. Payment terms (N30) හරියට දෙන්න — නැත්නම් MIRO එකේ payment block එනවා.',en:'Vendor Master via XK01/XK02/XK03. Required: Company code, Purchasing org, Reconciliation account.',ta:'Vendor Master — XK01/02/03.',steps:['XK01 → Account group','Company code + Purchasing org','Address + Bank','Reconciliation account','Payment terms','Save'],src:'SAP MM · Vendor Master',rel:['sap-po','sap-miro']},
+'sap-po':{k:['purchase order','po','me21n','me22n','ඇණවුම'],si:'PO via <b>ME21N</b> (create), <b>ME22N</b> (change), <b>ME23N</b> (display). Vendor + Material + Qty + Delivery date + Price + Plant + Tax code අනිවාර්යයි. Release strategy එකට අනුව approve වෙනවා.',en:'PO via ME21N/ME22N/ME23N. Required: Vendor, Material, Qty, Delivery, Price, Plant, Tax code.',ta:'PO — ME21N/22N/23N.',steps:['ME21N → PO type NB','Vendor + Purchasing org','Line items','Plant + SLoc','Tax code','Save'],src:'SAP MM · Purchase Order',rel:['sap-grn','sap-miro']},
+'sap-grn':{k:['grn','goods receipt','migo','101','ලැබීම'],si:'GRN කරන්නේ <b>MIGO</b> එකෙන්, <b>Movement Type 101</b> භාවිතයෙන්. PO → items check ✓ → Save. Material Document එකක් සෑදේ. <code>MB51</code> එකෙන් verify කරන්න.',en:'GRN via MIGO → Movement 101. Enter PO → OK items → Save.',ta:'GRN — MIGO 101.',steps:['MIGO → A01 Goods Receipt','R01 PO → PO #','OK ✓ Items','Batch (if needed)','Delivery Note #','Save'],src:'SAP MM · MIGO 101',rel:['sap-miro','sap-mb51','sap-migo-102']},
+'sap-migo-102':{k:['102','gr reversal','reversal','ආපසු'],si:'MIGO <b>102</b> = GR reversal. 101 Material Doc # reference දෙන්න. Qty එකට වඩා reverse කරන්න බෑ. Stock අඩුවෙනවා + FI/CO reversal.',en:'MIGO 102 = GR reversal. Reference 101 Material Doc.',ta:'MIGO 102 = GR reversal.',steps:['MIGO → A02','R02 Material Doc','Reversal qty','Reason','Save'],src:'SAP MM · MIGO 102',rel:['sap-grn','sap-migo-122']},
+'sap-migo-122':{k:['122','return to vendor','rtv'],si:'Movement <b>122</b> = Return to Vendor. GRN (101) කළ stock ආපහු vendor ට. Reference: original PO + Material Doc.',en:'Movement 122 = Return to Vendor.',ta:'Movement 122 = RTV.',steps:['MIGO → A02','R02 Material Doc','Reason: RTV','Save'],src:'SAP MM · MIGO 122',rel:['sap-grn','sap-migo-102']},
+'sap-migo-261':{k:['261','gi','goods issue','production order'],si:'Movement <b>261</b> = GI to Production Order. Raw material කපා නිෂ්පාදනයට යවනකොට. Reference = Production Order #.',en:'Movement 261 = GI to Production Order.',ta:'Movement 261 = GI to production.',steps:['MIGO → A07','R08 Order → Prod Order','Check components','Save'],src:'SAP MM · MIGO 261',rel:['sap-prod-order','sap-cogi']},
+'sap-migo-551':{k:['551','scrap','waste','අපතේ'],si:'Movement <b>551</b> = Scrap. Defective stock waste එකට. Cost center charge — supervisor approval අනිවාර්යයි. Reason code දෙන්න.',en:'Movement 551 = Scrap. Charges cost center.',ta:'Movement 551 = Scrap.',steps:['MIGO → A07','R10 Others → 551','Material + Qty + Reason','Cost center','Save'],src:'SAP MM · MIGO 551',rel:['sap-physical-inv']},
+'sap-stock-transfer':{k:['stock transfer','311','301','mb1b'],si:'Stock transfer: <b>MB1B</b>. <b>311</b> = plant ඇතුළත SLoc අතර. <b>301</b> = plant අතර.',en:'Stock transfer via MB1B. 311 intra, 301 cross-plant.',ta:'Stock transfer — MB1B.',steps:['MB1B → Movement','From/To Plant/SLoc','Material + Qty','Save'],src:'SAP MM · MB1B',rel:['sap-mb52','sap-mmbe']},
+'sap-miro':{k:['invoice','miro','bill','ඉන්වොයිස්'],si:'Invoice <b>MIRO</b>. 3-way match: PO ↔ GRN ↔ Invoice. Mismatch → block. Tax + reference අනිවාර්යයි.',en:'Invoice via MIRO. 3-way match: PO ↔ GRN ↔ Invoice.',ta:'Invoice — MIRO.',steps:['MIRO → Invoice date','Reference','PO number → Enter','Compare GRN','Tax code','Save'],src:'SAP MM · MIRO',rel:['sap-grn','sap-po','sap-miro-block']},
+'sap-miro-block':{k:['blocked invoice','mrbr','payment block'],si:'Blocked invoice resolve <b>MRBR</b> එකෙන්. Reason බලන්න: qty variance / price variance / GR missing. Fix කරලා release කරන්න.',en:'Resolve blocked invoices via MRBR.',ta:'MRBR — blocked invoice.',steps:['MRBR → select','Display reason','Fix','Release'],src:'SAP MM · MRBR',rel:['sap-miro','sap-grn']},
+'sap-mrp':{k:['mrp','md01','md02','md04','planning'],si:'MRP: <b>MD01</b> (plant), <b>MD02</b> (material), <b>MD04</b> (stock list). Clean data ඕන: BOM, Routing, Lead time, Safety stock.',en:'MRP: MD01/MD02/MD04. Clean data needed.',ta:'MRP — MD01/02/04.',steps:['MD04 → exceptions','Check BOM','MD01/MD02 run','MD05 MRP list'],src:'SAP PP · MRP',rel:['sap-bom','sap-prod-order']},
+'sap-bom':{k:['bom','cs01','cs02','cs03'],si:'BOM: <b>CS01</b> (create), <b>CS02</b> (change), <b>CS03</b> (display). Header material + Plant + Usage (1=production).',en:'BOM via CS01/CS02/CS03.',ta:'BOM — CS01/02/03.',steps:['CS01 → Material + Plant','Usage 1','Components: Material/Qty','Item category L','Save'],src:'SAP PP · BOM',rel:['sap-mrp','sap-routing']},
+'sap-prod-order':{k:['production order','co01','co02'],si:'Production Order: <b>CO01</b> (create), <b>CO02</b> (change). Release කළාට පස්සේ GI කරන්න පුළුවන්.',en:'Prod Order via CO01/CO02. Release before GI.',ta:'Prod Order — CO01/02.',steps:['CO01 → Material + Qty + Dates','Release','Print shop papers'],src:'SAP PP · CO01',rel:['sap-migo-261','sap-co11n']},
+'sap-co11n':{k:['co11n','co15','confirmation'],si:'Order confirmation: <b>CO11N</b> / <b>CO15</b>. Yield + scrap + labor. Confirm කළාම auto-GI (backflush).',en:'Confirm via CO11N/CO15.',ta:'Confirmation — CO11N.',steps:['CO11N → Order','Operation + Yield + Scrap','Labor','Post'],src:'SAP PP · CO11N',rel:['sap-prod-order','sap-cogi']},
+'sap-mb51':{k:['mb51','material document','doc list'],si:'<b>MB51</b> = Material Document List. Movement type + date + material filter කරන්න.',en:'MB51 = Material Document List.',ta:'MB51 — material doc list.',steps:['MB51 → filters','Execute','Export'],src:'SAP MM · MB51',rel:['sap-grn','sap-mb52']},
+'sap-mb52':{k:['mb52','stock','inventory','තොග'],si:'<b>MB52</b> = SLoc stock. <b>MB5L</b> = value. <b>MMBE</b> = single material.',en:'MB52/MMBE stock reports.',ta:'MB52 — stock.',steps:['MB52 → Material + Plant','Execute'],src:'SAP MM · MB52',rel:['sap-mmbe']},
+'sap-mmbe':{k:['mmbe','stock overview'],si:'<b>MMBE</b> = single material stock. Unrestricted / QI / blocked / in-transit එකවර බලන්න.',en:'MMBE = single material stock view.',ta:'MMBE — stock view.',steps:['MMBE → Material + Plant','Execute'],src:'SAP MM · MMBE',rel:['sap-mb52']},
+'sap-qa32':{k:['qa32','qm','inspection lot'],si:'Inspection Lot <b>QA32</b>. QA11 = results, QA32 = worklist. UD එකෙන් stock release/block.',en:'QA32 = inspection lot worklist.',ta:'QA32 — inspection lot.',steps:['QA32 → Lot #','QA11 Results','UD → release'],src:'SAP QM · QA32',rel:['sap-grn']},
+'sap-physical-inv':{k:['physical inventory','mi01','mi04','mi07'],si:'PI: <b>MI01</b> (create) → <b>MI04</b> (count) → <b>MI07</b> (post). Large variance → recount.',en:'PI: MI01 → MI04 → MI07.',ta:'PI — MI01/04/07.',steps:['MI01 → Materials','MI04 → count','MI07 → post'],src:'SAP MM · Physical Inventory',rel:['sap-migo-551']},
+'sap-cogi':{k:['cogi','backflush error','err'],si:'<b>COGI</b> = auto-GI errors. Reason: stock shortage / batch missing / QI stock. Fix → Post.',en:'COGI = backflush error worklist.',ta:'COGI — backflush errors.',steps:['COGI → plant + date','Open error','Fix reason','Post'],src:'SAP PP · COGI',rel:['sap-co11n','sap-error-stock']},
+'sap-error-postperiod':{k:['posting period','period not open','ob52'],si:'"Posting period not open" — accounting period closed. <b>OB52</b> check කරන්න හෝ posting date වෙනස් කරන්න.',en:'"Posting period not open" — check OB52.',ta:'"Posting period not open" — OB52.',steps:['Check posting date','OB52 → open periods','Adjust date','Retry'],src:'SAP FI · OB52',rel:['sap-miro','sap-grn']},
+'sap-error-materialplant':{k:['material not maintained','m7 021','plant'],si:'"Material not maintained for plant" — MM01 එකෙන් existing material එකට new plant extend කරන්න.',en:'Material not maintained for plant — MM01 extend.',ta:'MM01 extend to plant.',steps:['MM01 → existing material','New Plant','Select views','Save'],src:'SAP MM · MM01 extend',rel:['sap-mm','sap-error-stock']},
+'sap-error-stock':{k:['stock not available','negative stock','shortage'],si:'"Stock not available" — <b>MMBE</b> එකෙන් unrestricted / QI / blocked බලන්න. Batch වෙනස් කරන්න, alternate material, GRN earlier, MB1B correction.',en:'"Stock not available" — check MMBE.',ta:'Stock shortage — MMBE.',steps:['MMBE check','Batch change','Alt material','MB1B correction'],src:'SAP MM · MMBE',rel:['sap-mmbe','sap-cogi']},
+'sap-error-batch':{k:['batch required','batch missing'],si:'"Batch required" — material batch-managed. MM03 → Plant Stock check කරන්න. MIGO/MB1B එකේ batch # දෙන්න.',en:'Batch required — enter batch in MIGO.',ta:'Batch required.',steps:['MM03 verify','Get batch #','Enter in MIGO'],src:'SAP MM · Batch',rel:['sap-grn']},
+'oracle-leave':{k:['leave','oracle','hcm','absence','නිවාඩු'],si:'Oracle HCM leave: <b>Me → Absences → Add</b>. Balance බලන්න → Plan + Type → Dates → Submit. Approver approve කරනකොට confirm.',en:'Leave: Me → Absences → Add → Plan/Type → Submit → Approver.',ta:'Me → Absences → Add.',steps:['Sign in → Me → Absences','+ Add → Plan + Type','Dates + Reason','Submit'],src:'Oracle Cloud HCM · Absences',rel:['oracle-approve','oracle-payslip']},
+'oracle-approve':{k:['approve','worklist','manager'],si:'Approver Worklist (Me → Worklist). SLA 24h. Reject කරනකොට reason comment අනිවාර්යයි.',en:'Approvers: Me → Worklist. SLA 24h.',ta:'Worklist — 24h.',steps:['Me → Worklist','Review','Approve / Reject + comment'],src:'Oracle HCM · MSS',rel:['oracle-leave']},
+'oracle-payslip':{k:['payslip','pay','salary','වැටුප'],si:'Payslip: <b>Me → Pay → Payslips</b>. Discrepancy → HR Payroll within 7 days.',en:'Payslip: Me → Pay → Payslips.',ta:'Payslip: Me → Pay.',steps:['Me → Pay → Payslips','PDF download','Discrepancy → HR'],src:'Oracle HCM · Payroll',rel:['hris-payroll']},
+'andon-howto':{k:['andon','line stop','red button','help','signal'],si:'Andon = Jidoka core tool. ඕනෑම associate කෙනෙකුට line stop කරන්න අයිතිය තියෙනවා. Signal → TL 30–90s → escalation (L2: 2 min, L3: 5–10 min). <b>බොත්තම එබූ අයෙකුට දොස් කියන්න එපා — අගය කරන්න.</b>',en:'Andon is Jidoka tool. Any associate can stop. Signal → TL 30–90s. Never blame the presser.',ta:'Andon — Jidoka.',steps:['Identify issue','Press Andon','State issue','Wait for TL','Verify → Reset'],src:'MAS · Andon',rel:['andon-rca']},
+'andon-rca':{k:['rca','root cause','5 why','fishbone'],si:'Andon RCA = 5-Why / Fishbone / 8D. Fix කරලා RCA සටහන් නොකර reset කරන්න එපා. KPI: SRT අඩු කරනවා + repeat 0.',en:'Andon RCA: 5-Why / Fishbone / 8D.',ta:'Andon RCA — 5-Why.',steps:['Log issue','5-Why','Root cause','Countermeasure','Confirm'],src:'MAS · Andon RCA',rel:['andon-howto']},
+'3d-clo':{k:['clo','3d','virtual','sample'],si:'CLO3D / Browzwear / Optitex — virtual sampling. MAS Scan Hub සත්‍ය fabric data load කරන්න. Sign-off version එක විතරක් production යවන්න.',en:'CLO3D/Browzwear. Use Scan Hub data. Only sign-off version to production.',ta:'CLO3D/Browzwear.',steps:['Load fabric (Scan Hub)','Build 3D','Simulate','Annotate CLO-SET','Sign-off → production'],src:'MAS · 3D',rel:['3d-scanhub']},
+'3d-scanhub':{k:['scan hub','fabric','stretch'],si:'MAS Scan Hub = fabric digital twin. Generic settings වෙනුවට Scan Hub data accuracy වැඩි කරයි.',en:'Scan Hub = fabric digital twin.',ta:'Scan Hub.',steps:['Send swatch','Get properties','Import CLO','Simulate'],src:'MAS · Scan Hub',rel:['3d-clo']},
+'sp-link':{k:['sharepoint','link','share','permission'],si:'"Anyone with the link" use කරන්න එපා. Specific people + View/Edit. Email attachment වෙනුවට link.',en:'Never use "Anyone with the link".',ta:'Specific people only.',steps:['Right-click → Share','Specific people','Permission','Expiry'],src:'SharePoint',rel:['sp-version']},
+'sp-version':{k:['version','history','check out'],si:'SOP/Tech Pack edit — Check Out + Check In. Version history restore කරන්න.',en:'Check out/in + version history.',ta:'Check out/in.',steps:['Check out','Edit','Check in','Restore old version'],src:'SharePoint',rel:['sp-link']},
+'hris-payroll':{k:['payroll','epf','etf','apit','hris'],si:'Payroll: attendance + OT + EPF (8/12) + ETF (3) + APIT. Segregation of duties අනිවාර්යයි.',en:'Payroll: EPF/ETF/APIT. Segregation of duties.',ta:'Payroll — EPF/ETF/APIT.',steps:['Verify attendance','Legal Employer','Deductions','Approval','Release'],src:'HRIS · Payroll',rel:['oracle-payslip']},
+'ai-prompt':{k:['prompt','ai','chatgpt','copilot'],si:'හොඳ prompt = <b>Role + Context + Task + Constraints + Format</b>. Enterprise AI (Copilot) පමණක්.',en:'Prompt = Role + Context + Task + Constraints + Format.',ta:'Prompt structure.',steps:['Role','Context','Task','Constraints','Format'],src:'MAS · AI Prompting',rel:['ai-security','ai-verify']},
+'ai-security':{k:['ai security','confidential','brand ip','pii'],si:'Public AI වලට නොදාන්න: unreleased designs, Tech Packs, pricing, Scan Hub data, employee PII. Enterprise Copilot / MAS internal LLM පමණක්.',en:'Never paste brand IP/PII into public AI.',ta:'Enterprise AI only.',steps:['Classify data','Enterprise AI','Redact PII','Log if unsure'],src:'MAS · AI Security',rel:['ai-prompt','ai-verify']},
+'ai-verify':{k:['verify','hallucination','human in loop'],si:'AI output verify නොකර use කරන්න එපා. Human-in-the-loop අනිවාර්යයි. Numbers, sources, compliance check කරන්න.',en:'Always verify AI output.',ta:'Verify AI output.',steps:['Read critically','Cross-check','Verify sources','Compliance','Human approval'],src:'MAS · AI Verify',rel:['ai-prompt','ai-security']},
+'dash-huddle':{k:['dashboard','huddle','power bi','mes'],si:'Hourly dashboard = decision tool. Data entry පැයෙන් පැය. Huddle: target vs actual, DHU, WIP, downtime.',en:'Hourly dashboard. Huddle review.',ta:'Hourly dashboard.',steps:['Enter hourly','Huddle review','Bottleneck','Action owner'],src:'MAS · Dashboard',rel:['dash-kpi']},
+'dash-kpi':{k:['kpi','dhu','wip','oee'],si:'KPIs: <b>DHU</b> = Defects per Hundred Units. <b>WIP</b> = Work In Progress. <b>OEE</b> = A×P×Q.',en:'KPIs: DHU, WIP, OEE.',ta:'KPIs: DHU, WIP, OEE.',steps:['Compare actual vs target','DHU limit','WIP balance','Downtime RCA'],src:'MAS · KPI',rel:['dash-huddle']},
+'__greeting':{k:['hi','hello','hey','ayubowan','හායි'],si:'ආයුබෝවන්! මම ඔබේ AI Training Coach. SAP, Oracle HCM, Andon, 3D, SharePoint, HRIS, AI, Dashboard — ඕනෑම topic එකක් අහන්න.',en:'Hello! Ask anything about SAP, Oracle, Andon, 3D, SharePoint, HRIS, AI.',ta:'Hello! Ask anything.',steps:[],src:'',rel:['sap-grn','andon-howto','ai-prompt']},
+'__thanks':{k:['thanks','thank you','ස්තූතියි'],si:'සතුටුයි! තව ප්‍රශ්නයක් තියෙනවා නම් අහන්න.',en:'Happy to help!',ta:'Happy to help!',steps:[],src:'',rel:['sap-grn','dash-huddle']}
+};
+
+var aiBusy=false,aiLast=null;
+function aiEsc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function aiLang(txt){if(/[\u0D80-\u0DFF]/.test(txt))return 'si';if(/[\u0B80-\u0BFF]/.test(txt))return 'ta';return S.lang}
+function aiNorm(s){return (s||'').toLowerCase().replace(/[^\w\s\u0D80-\u0DFF\u0B80-\u0BFF]/g,' ')}
+function aiToks(s){return aiNorm(s).split(/\s+/).filter(function(w){return w.length>1})}
+
+function aiStatus(kind,msg){
+  var st=document.getElementById('aiStatus');if(!st)return;
+  st.className='ai-status'+(kind?' '+kind:'');
+  st.innerHTML='<i></i> <span>'+msg+'</span>';
+}
+
+function aiAddMsg(who,html,src,related){
+  var chat=document.getElementById('chat');
+  var w=document.createElement('div');w.className='msg '+who;
+  w.innerHTML=html+(src?'<span class="ai-src">📖 '+aiEsc(src)+'</span>':'');
+  if(related&&related.length){
+    var rel=document.createElement('div');rel.className='ai-related';
+    related.forEach(function(id){
+      var e=KB[id];if(!e||id.indexOf('__')===0)return;
+      var b=document.createElement('button');b.type='button';b.textContent='↳ '+(e.src||id);
+      b.onclick=function(){aiAnswerId(id,e.src||id)};
+      rel.appendChild(b);
+    });
+    if(rel.children.length)w.appendChild(rel);
+  }
+  chat.appendChild(w);chat.scrollTop=chat.scrollHeight;
+  return w;
+}
+function aiTypingBubble(){
+  var chat=document.getElementById('chat');
+  var w=document.createElement('div');w.className='msg ai';
+  w.innerHTML='<span class="ai-typing-dots"><span></span><span></span><span></span></span>';
+  chat.appendChild(w);chat.scrollTop=chat.scrollHeight;return w;
+}
+
+function aiScore(text,e){
+  var tk=aiToks(text),n=aiNorm(text),s=0;
+  e.k.forEach(function(kw){
+    kw=kw.toLowerCase();
+    if(tk.indexOf(kw)>=0)s+=5;
+    else if((kw.length>=4||kw.indexOf(' ')>=0)&&n.indexOf(kw)>=0)s+=(kw.indexOf(' ')>=0?8:4);
+    else if(kw.length>=4&&tk.some(function(t){return t.length>=4&&(t.indexOf(kw)>=0||kw.indexOf(t)>=0)}))s+=2;
+  });
+  return s;
+}
+function aiFindAll(text){
+  var out=[];
+  for(var id in KB){if(id.indexOf('__')===0)continue;var s=aiScore(text,KB[id]);if(s>=2)out.push({id:id,s:s})}
+  out.sort(function(a,b){return b.s-a.s});
+  return out;
+}
+function aiIntent(t){
+  t=aiNorm(t);
+  if(/\b(vs|versus|difference|compare)\b|වෙනස|வித்தியாசம்/.test(t))return 'compare';
+  if(/\b(error|issue|problem|fail|fix|blocked)\b|ගැටලු|දෝෂ|பிழை/.test(t))return 'trouble';
+  if(/\b(how|steps|procedure|create|post)\b|කොහොම|පියවර|எப்படி/.test(t))return 'howto';
+  if(/\b(why)\b|ඇයි|ஏன்/.test(t))return 'why';
+  return 'general';
+}
+function aiBuild(id,lang,intent){
+  var e=KB[id];if(!e)return null;
+  var body=e[lang]||e.si||e.en||'';
+  if(e.steps&&e.steps.length&&(intent==='howto'||intent==='general'||intent==='trouble'))
+    body+='<ul class="ai-steps">'+e.steps.map(function(s){return '<li>'+s+'</li>'}).join('')+'</ul>';
+  return {html:body,src:e.src||'',related:e.rel||[]};
+}
+function aiCompose(text){
+  var lang=aiLang(text),low=aiNorm(text);
+  if(/(^|\s)(progress|certif\w*)(\s|$)/.test(low)||/ප්‍රගති|සහතික|முன்னேற்ற|சான்றிதழ்/.test(text))
+    return {html:aiEsc(aiInsight()),src:'',related:[]};
+  if(/^\s*(hi|hello|hey|ayubowan)\b|^\s*හායි|^\s*ආයුබෝවන්/i.test(text))return aiBuild('__greeting',lang,'general');
+  if(/\b(thanks|thank you)\b|ස්තූතියි|நன்றி/i.test(text))return aiBuild('__thanks',lang,'general');
+  var intent=aiIntent(text),hits=aiFindAll(text);
+  if(!hits.length&&aiLast&&/^\s*(and|then|why|more)\b|^\s*(එතකොට|ඇයි|තව)/i.test(text))hits=[{id:aiLast,s:5}];
+  if(hits.length){
+    if(intent==='compare'){
+      var top=hits.filter(function(h){return h.s>=5}).slice(0,3);
+      if(top.length>=2){
+        aiLast=top[0].id;
+        var html='',rel=[];
+        top.forEach(function(h,i){
+          var e=KB[h.id];
+          html+=(i?'<hr style="border:0;border-top:1px dashed var(--bd);margin:10px 0">':'')+'<b>'+aiEsc(e.src||h.id)+'</b><br>'+(e[lang]||e.si||e.en||'');
+          rel=rel.concat(e.rel||[]);
+        });
+        return {html:html,src:'',related:rel.filter(function(x,i){return rel.indexOf(x)===i}).slice(0,4)};
+      }
+    }
+    aiLast=hits[0].id;
+    return aiBuild(hits[0].id,lang,intent);
+  }
+  var nf={
+    si:'🤔 මට ඒ ගැන නිශ්චිත පිළිතුරක් නැහැ. T-code එකක් හෝ system නමක් එකතු කර නැවත අහන්න.<br><br>උදා: <i>"MIGO 101 error"</i>, <i>"Andon escalation"</i>, <i>"SAP MRP settings"</i>',
+    en:'🤔 I do not have a specific answer for that. Add a T-code or system name and ask again.<br><br>e.g. <i>"MIGO 101 error"</i>, <i>"Andon escalation"</i>, <i>"SAP MRP settings"</i>',
+    ta:'🤔 அதற்கு குறிப்பிட்ட பதில் என்னிடம் இல்லை. T-code அல்லது அமைப்பின் பெயரைச் சேர்த்து மீண்டும் கேளுங்கள்.'
+  };
+  return {html:nf[lang]||nf.si,src:'',related:['sap-grn','sap-miro','sap-error-stock','andon-howto','ai-prompt']};
+}
+
+function aiInsight(){
+  var n=totalDone(),pct=Math.round(n/T.length*100);
+  var pr=PRI[S.ly]||[];
+  var miss=pr.filter(function(i){return !isDone(i)});
+  if(n===0)return t('aiStart');
+  if(miss.length===0)return t('aiPerfect').replace('{p}',pct);
+  return t('aiProg').replace('{p}',pct).replace('{l}',miss.map(function(i){return T[i].n}).join(', '));
+}
+
+function aiRespond(getReply){
+  aiBusy=true;
+  aiStatus('thinking','Thinking…');
+  var tb=aiTypingBubble();
+  setTimeout(function(){
+    tb.remove();
+    try{var r=getReply();aiAddMsg('ai',r.html,r.src,r.related)}
+    catch(err){aiAddMsg('ai','⚠️ Error. Please try again.',null,['sap-grn'])}
+    aiStatus('','Ready · context memory active');
+    aiBusy=false;
+  },350+Math.random()*450);
+}
+function aiAsk(text){
+  text=(text||'').trim();if(!text||aiBusy)return;
+  aiAddMsg('me',aiEsc(text));
+  aiRespond(function(){return aiCompose(text)});
+}
+function aiAnswerId(id,label){
+  if(aiBusy)return;
+  aiAddMsg('me',aiEsc(label));
+  aiLast=id;
+  aiRespond(function(){return aiBuild(id,S.lang,'howto')});
+}
+/* kept for the feedback form + chips: aiSay(text,true)=ask, aiSay(text,false)=coach note */
+function aiSay(text,isUser){
+  if(isUser){aiAsk(text)}
+  else{aiAddMsg('ai',aiEsc(text))}
+}
+function aiGreet(){
+  aiAddMsg('ai','👋 '+aiEsc(aiInsight())+'<br><br>'+(S.lang==='en'?'Ask me anything about <b>SAP, Oracle HCM, Andon, 3D, SharePoint, HRIS, AI or the Dashboard</b>. Follow-up questions work too.':S.lang==='ta'?'<b>SAP, Oracle HCM, Andon, 3D, SharePoint, HRIS, AI, Dashboard</b> பற்றி எதையும் கேளுங்கள்.':'<b>SAP, Oracle HCM, Andon, 3D, SharePoint, HRIS, AI, Dashboard</b> ගැන ඕනෑම දෙයක් අහන්න. Follow-up ප්‍රශ්නත් අහන්න පුළුවන්.'),null,['sap-grn','sap-miro','andon-howto','ai-security']);
+}
+
 function renderAI(){
   document.getElementById('aiTitle').textContent=t('aiTitle');
   document.getElementById('aiSub').textContent=t('aiSub');
@@ -2184,89 +2395,44 @@ function renderAI(){
 
   var cat=document.getElementById('fbCat');
   if(!cat.options.length){
-    t('fbCatO').forEach(function(v,i){
+    t('fbCatO').forEach(function(v){
       var o=document.createElement('option');o.value=v;o.textContent=v;cat.appendChild(o);
     });
   }
 
   var chips=document.getElementById('aiChips');
   chips.innerHTML='';
-  ['Digital Floor Dashboard','Andon System','SAP System','SharePoint','3D Digital Co-creation','AI Prompting'].forEach(function(n){
-    var b=document.createElement('button');b.textContent=n;
-    b.onclick=function(){aiSay(n,true)};
+  ['MIGO 101 vs 122?','Andon escalation?','SAP MRP','Oracle leave','AI security','SAP error fix','Digital Floor Dashboard','SharePoint'].forEach(function(n){
+    var b=document.createElement('button');b.type='button';b.textContent=n;
+    b.onclick=function(){aiAsk(n)};
     chips.appendChild(b);
   });
 
   var chat=document.getElementById('chat');
   if(!chat.dataset.init){
     chat.dataset.init='1';
-    aiSay(aiInsight(),false,true);
+    chat.innerHTML='';
+    aiLast=null;
+    aiGreet();
+    aiStatus('','Ready · SAP, Oracle, Andon ගැන ඕනෑම ප්‍රශ්නයක් අහන්න');
   }
   renderFbList();
-}
-
-function aiInsight(){
-  var n=totalDone(),pct=Math.round(n/T.length*100);
-  var pr=PRI[S.ly]||[];
-  var miss=pr.filter(function(i){return !isDone(i)});
-  if(n===0)return t('aiStart');
-  if(miss.length===0)return t('aiPerfect').replace('{p}',pct);
-  return t('aiProg').replace('{p}',pct).replace('{l}',miss.map(function(i){return T[i].n}).join(', '));
-}
-
-function aiSay(text,isUser,silent){
-  var chat=document.getElementById('chat');
-  if(isUser){
-    var me=document.createElement('div');me.className='msg me';me.textContent=text;
-    chat.appendChild(me);chat.scrollTop=chat.scrollHeight;
-  }
-  var typing=document.createElement('div');
-  typing.className='msg ai';
-  typing.innerHTML='<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
-  chat.appendChild(typing);chat.scrollTop=chat.scrollHeight;
-
-  setTimeout(function(){
-    typing.remove();
-    var r=document.createElement('div');r.className='msg ai';
-    r.textContent=isUser?aiReply(text):text;
-    chat.appendChild(r);chat.scrollTop=chat.scrollHeight;
-  },isUser?800:350);
-}
-
-function aiReply(q){
-  var s=q.toLowerCase();
-  var map=[
-    {k:['dashboard','floor','dhu','wip','power bi'],i:0},
-    {k:['oracle','hcm','kiosk','leave','payslip','නිවාඩු'],i:1},
-    {k:['andon','rca','jidoka','signal','srt'],i:2},
-    {k:['3d','clo','browzwear','optitex','scan hub','pattern'],i:3},
-    {k:['sap','grn','mrp','bom','mm','pp','qm'],i:4},
-    {k:['hris','payroll','epf','etf','apit','biometric'],i:5},
-    {k:['sharepoint','version','sop','document','library'],i:6},
-    {k:['ai','prompt','copilot','pii','brand ip'],i:7}
-  ];
-  for(var m=0;m<map.length;m++){
-    for(var j=0;j<map[m].k.length;j++){
-      if(s.indexOf(map[m].k[j])>=0){
-        var i=map[m].i;
-        var tips=S.lang!=='en'?(TIPS_SI[i]||T[i].tips):(E[i].tips||T[i].tips);
-        return T[i].i+' '+T[i].n+' — '+tips[0]+(tips[1]?'\n\n• '+tips[1]:'');
-      }
-    }
-  }
-  if(s.indexOf('progress')>=0||s.indexOf('ප්‍රගති')>=0||s.indexOf('முன்னேற்ற')>=0)return aiInsight();
-  if(s.indexOf('certif')>=0||s.indexOf('සහතික')>=0)return t('aiPerfect').replace('{p}',Math.round(totalDone()/T.length*100));
-  return t('aiNotFound');
 }
 
 document.getElementById('aiSend').onclick=function(){
   var inp=document.getElementById('aiIn');
   var v=inp.value.trim();if(!v)return;
-  inp.value='';aiSay(v,true);
+  inp.value='';inp.style.height='auto';aiAsk(v);
 };
-document.getElementById('aiIn').addEventListener('keydown',function(e){
-  if(e.key==='Enter'){e.preventDefault();document.getElementById('aiSend').click()}
+document.getElementById('aiIn').addEventListener('input',function(){
+  this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px';
 });
+document.getElementById('aiIn').addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();document.getElementById('aiSend').click()}
+});
+document.getElementById('aiClear').onclick=function(){
+  var chat=document.getElementById('chat');chat.dataset.init='';renderAI();
+};
 
 /* ---- feedback form ---- */
 document.querySelectorAll('#fbStars button').forEach(function(b){
