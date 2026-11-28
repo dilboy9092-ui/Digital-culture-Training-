@@ -282,6 +282,191 @@ textarea{min-height:88px;resize:vertical;font-family:inherit}
 #cyberFrame{flex:1;width:100%;border:0;background:#04050a}
 #certwrap{transform-origin:top left;width:1123px}
 @media print{body{background:#fff!important}body *{visibility:hidden}#certwrap,#certwrap *{visibility:visible}#certwrap{position:absolute!important;left:0;top:0;width:1123px!important;height:794px!important;overflow:visible!important;transform:none!important}#certwrap .certificate{transform:none!important;box-shadow:none!important}@page{size:A4 landscape;margin:0}}
+/* ================= MS OFFICE MODULE ================= */
+:root{
+  --ms-word:#2b579a;--ms-excel:#217346;--ms-ppt:#d24726;
+  --ms-outlook:#0078d4;--ms-teams:#6264a7;--ms-onenote:#7719aa;
+  --ms-found:#6264a7;--ms-common:#e31e24;--ms-sec:#a4373a;
+  --ms-pro:#d4af37;--ms-tb:#6d6e71;
+}
+.ms-overlay{position:fixed;inset:0;z-index:80;background:var(--bg);overflow-y:auto;display:flex;flex-direction:column;animation:fadeIn .25s}
+.ms-overlay.hide{display:none}
+.ms-shell{max-width:1100px;margin:0 auto;width:100%;padding:0 16px 40px}
+.ms-head{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;padding:14px 0;background:var(--bg);border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.ms-back{background:var(--card);border:1px solid var(--bd);color:var(--tx);width:42px;height:42px;border-radius:50%;font-size:20px;cursor:pointer;flex:none;transition:.15s}
+.ms-back:hover{background:var(--red);color:#fff;border-color:var(--red)}
+.ms-brand{display:flex;align-items:center;gap:12px;flex:1;min-width:180px}
+.ms-logo{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-weight:900;font-size:22px;color:#fff;background:linear-gradient(135deg,var(--ms-word),var(--ms-excel) 50%,var(--ms-ppt));box-shadow:0 6px 18px rgba(43,87,154,.35);flex:none}
+.ms-brand h2{margin:0;font-size:20px}
+.ms-brand p{margin:0;font-size:12px}
+.ms-nav{display:flex;gap:6px;flex-wrap:wrap}
+.ms-nav-btn{padding:9px 16px;border-radius:20px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;white-space:nowrap}
+.ms-nav-btn:hover{border-color:var(--ms-word);color:var(--ms-word)}
+.ms-nav-btn.on{background:var(--ms-word);color:#fff;border-color:var(--ms-word);box-shadow:0 4px 14px rgba(43,87,154,.35)}
+.ms-body{margin-top:18px;animation:fadeUp .35s ease}
+
+/* Category grid */
+.ms-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.ms-cat{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px;cursor:pointer;text-align:left;font:inherit;color:inherit;position:relative;overflow:hidden;transition:transform .18s,box-shadow .18s,border-color .18s;animation:fadeUp .45s ease both}
+.ms-cat::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--ms-c);transition:.2s}
+.ms-cat:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.12);border-color:var(--ms-c)}
+.ms-cat:hover::before{width:8px}
+.ms-cat .ms-ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:26px;color:#fff;margin-bottom:10px;background:var(--ms-c);box-shadow:0 6px 18px rgba(0,0,0,.15)}
+.ms-cat h3{margin:0 0 4px;font-size:17px;color:var(--tx)}
+.ms-cat .ms-sub{font-size:12.5px;color:var(--mu);line-height:1.5;margin:0}
+.ms-cat .ms-count{margin-top:10px;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--ms-c);display:flex;align-items:center;gap:6px}
+.ms-cat .ms-count::after{content:'→';transition:.2s}
+.ms-cat:hover .ms-count::after{transform:translateX(4px)}
+
+/* Subtopic list */
+.ms-st-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.ms-st-title{display:flex;align-items:center;gap:12px;flex:1;min-width:200px}
+.ms-st-title .ms-ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:26px;color:#fff;background:var(--ms-c);flex:none}
+.ms-st-title h2{margin:0;font-size:22px}
+.ms-st-title p{margin:0;font-size:13px;color:var(--mu)}
+.ms-list{display:grid;gap:10px}
+.ms-item{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px 16px;cursor:pointer;font:inherit;color:inherit;text-align:left;width:100%;transition:.18s;animation:fadeUp .4s ease both}
+.ms-item:hover{border-color:var(--ms-c);transform:translateX(4px);box-shadow:0 8px 22px rgba(0,0,0,.08)}
+.ms-item .num{width:34px;height:34px;border-radius:10px;background:color-mix(in srgb,var(--ms-c) 14%,transparent);color:var(--ms-c);display:grid;place-items:center;font-weight:800;font-size:13px;flex:none}
+.ms-item .txt{flex:1}
+.ms-item .txt b{display:block;font-size:15px;color:var(--tx);margin-bottom:2px}
+.ms-item .txt span{font-size:12.5px;color:var(--mu)}
+.ms-item .arr{color:var(--mu);font-size:18px;transition:.2s}
+.ms-item:hover .arr{color:var(--ms-c);transform:translateX(4px)}
+
+/* Subtopic detail */
+.ms-detail{background:var(--card);border:1px solid var(--bd);border-radius:18px;overflow:hidden;animation:fadeUp .4s ease}
+.ms-detail .bar-top{height:6px;background:var(--ms-c)}
+.ms-detail-inner{padding:22px}
+.ms-detail h2{margin:0 0 6px;font-size:22px}
+.ms-detail .sub{font-size:13px;color:var(--mu);margin-bottom:14px}
+.ms-detail p{line-height:1.7;margin:10px 0;color:var(--tx);font-size:15px}
+.ms-detail strong{color:var(--ms-c)}
+.ms-detail ul{padding-left:20px;margin:10px 0}
+.ms-detail li{margin:6px 0;line-height:1.65}
+.ms-tips{list-style:none;padding:0;margin:14px 0;background:color-mix(in srgb,var(--ok) 8%,transparent);border-left:4px solid var(--ok);border-radius:10px;padding:12px 16px}
+.ms-tips li{padding-left:24px;position:relative;margin:7px 0;font-size:14.5px}
+.ms-tips li::before{content:"✔";position:absolute;left:0;color:var(--ok);font-weight:800}
+.ms-warn{background:var(--soft);border-left:4px solid var(--red);border-radius:10px;padding:12px 16px;margin:14px 0;font-size:14px}
+.ms-warn b{color:var(--red)}
+.ms-code{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;font-family:Consolas,'Courier New',monospace;font-size:13px;overflow-x:auto;margin:12px 0;color:var(--tx);white-space:pre}
+.ms-nav-foot{display:flex;justify-content:space-between;gap:10px;margin-top:18px;flex-wrap:wrap}
+.ms-nav-foot button{padding:11px 18px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit;font-weight:700;cursor:pointer;transition:.15s;font-size:14px}
+.ms-nav-foot button:hover{border-color:var(--ms-c);color:var(--ms-c)}
+.ms-nav-foot button.primary{background:var(--ms-c);color:#fff;border-color:var(--ms-c)}
+.ms-nav-foot button.primary:hover{filter:brightness(1.1)}
+
+/* Animated visual panel (video-like) */
+.ms-visual{position:relative;background:linear-gradient(135deg,color-mix(in srgb,var(--ms-c) 10%,transparent),color-mix(in srgb,var(--ms-c) 3%,transparent));border:1px solid var(--bd);border-radius:14px;padding:12px;margin:14px 0;overflow:hidden}
+.ms-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.25) 50%,transparent 70%);transform:translateX(-120%);animation:sheen 5s ease-in-out infinite;pointer-events:none}
+.ms-visual svg{display:block;width:100%;height:auto;color:var(--ms-c);max-height:170px}
+.ms-visual .badge{position:absolute;top:10px;right:12px;font-size:10px;font-weight:800;letter-spacing:1.4px;background:var(--ms-c);color:#fff;padding:3px 9px;border-radius:20px;display:flex;align-items:center;gap:5px}
+.ms-visual .badge i{width:6px;height:6px;border-radius:50%;background:#fff;animation:blink 1.1s infinite}
+.ms-an-bar{transform-box:fill-box;transform-origin:bottom;animation:msBar 2.4s ease-in-out infinite}
+@keyframes msBar{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+.ms-an-draw{stroke-dasharray:400;stroke-dashoffset:400;animation:msDraw 3s ease-in-out infinite}
+@keyframes msDraw{0%{stroke-dashoffset:400}55%,100%{stroke-dashoffset:0}}
+.ms-an-spin{transform-box:fill-box;transform-origin:center;animation:spin 8s linear infinite}
+.ms-an-float{animation:taFloat 3.2s ease-in-out infinite}
+@keyframes taFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.ms-an-pop{transform-box:fill-box;transform-origin:center;animation:msPop 2.4s ease-in-out infinite}
+@keyframes msPop{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+.ms-an-fade{animation:msFade 2.8s ease-in-out infinite}
+@keyframes msFade{0%,100%{opacity:.3}50%{opacity:1}}
+.ms-an-blink{animation:msBlink 1s steps(2,end) infinite}
+@keyframes msBlink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes sheen{0%,70%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+
+/* ===== EXAM UI ===== */
+.ms-exam{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:22px;animation:fadeUp .4s ease}
+.ms-exam-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.ms-exam-head .ms-ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:26px;color:#fff;background:linear-gradient(135deg,var(--ms-word),var(--ms-excel),var(--ms-ppt));flex:none}
+.ms-exam-head h2{margin:0;font-size:22px}
+.ms-exam-head p{margin:0;font-size:13px;color:var(--mu)}
+.ms-exam-progress{height:8px;background:var(--bd);border-radius:6px;overflow:hidden;margin-bottom:18px}
+.ms-exam-progress i{display:block;height:100%;background:linear-gradient(90deg,var(--ms-word),var(--ms-excel));transition:width .35s}
+.ms-q{font-size:17px;font-weight:700;margin-bottom:14px;color:var(--tx);line-height:1.45}
+.ms-q .qn{display:inline-block;background:var(--ms-word);color:#fff;padding:3px 10px;border-radius:20px;font-size:12px;margin-right:8px;font-weight:800}
+.ms-opt{display:block;width:100%;text-align:left;margin-top:10px;padding:13px 15px;border:1px solid var(--bd);border-radius:12px;background:var(--bg);color:var(--tx);font:inherit;font-size:14.5px;cursor:pointer;transition:.15s;line-height:1.5}
+.ms-opt:hover{border-color:var(--ms-word);transform:translateX(3px)}
+.ms-opt.sel{border-color:var(--ms-word);background:color-mix(in srgb,var(--ms-word) 10%,transparent);font-weight:600}
+.ms-exam-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:20px;flex-wrap:wrap}
+.ms-exam-foot .ctr{font-size:13px;color:var(--mu);font-weight:600}
+
+/* Result */
+.ms-result{text-align:center;padding:30px 20px;animation:fadeUp .5s ease}
+.ms-result .grade-badge{width:130px;height:130px;border-radius:50%;margin:0 auto 16px;display:grid;place-items:center;font-family:'Orbitron',Georgia,serif;font-size:38px;font-weight:900;color:#fff;position:relative;box-shadow:0 14px 40px rgba(0,0,0,.2);animation:pop .7s cubic-bezier(.2,1.4,.4,1)}
+.ms-result .grade-badge::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px dashed rgba(255,255,255,.4);animation:spin 14s linear infinite}
+.ms-result.g-DP .grade-badge{background:linear-gradient(135deg,#1a8f4d,#3ecf7a)}
+.ms-result.g-MP .grade-badge{background:linear-gradient(135deg,#2b579a,#0078d4)}
+.ms-result.g-OP .grade-badge{background:linear-gradient(135deg,#d4af37,#f0c94a)}
+.ms-result.g-F  .grade-badge{background:linear-gradient(135deg,#a4373a,#e31e24)}
+.ms-result h2{font-size:26px;margin:0 0 4px}
+.ms-result .gname{font-size:14px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--mu);margin-bottom:16px}
+.ms-result .gscore{font-size:15px;margin-bottom:20px;color:var(--tx)}
+.ms-result .gscore b{font-size:24px;color:var(--ms-word)}
+.ms-result .gbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.ms-result .gbtns button{padding:12px 22px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit;font-weight:700;cursor:pointer;transition:.15s}
+.ms-result .gbtns button.primary{background:linear-gradient(135deg,var(--ms-word),var(--ms-excel));color:#fff;border:0;box-shadow:0 8px 22px rgba(43,87,154,.35)}
+.ms-result .gbtns button:hover{transform:translateY(-2px)}
+
+/* ===== MS OFFICE CERTIFICATE ===== */
+#msCertWrap{transform-origin:top left;width:1123px}
+.ms-cert{width:1123px;height:794px;background:#fff;position:relative;padding:45px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.15);font-family:'Inter',system-ui,'Noto Sans Sinhala','Iskoola Pota','Nirmala UI',sans-serif;line-height:normal;font-size:16px;color:#222;text-align:left;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.ms-cert .outer-border{position:absolute;inset:15px;border:3px solid #a71925}
+.ms-cert .inner-border{position:absolute;inset:23px;border:1px solid #d4af37}
+.ms-cert .top-line{width:180px;height:5px;background:linear-gradient(90deg,#2b579a,#217346,#d24726,#0078d4,#6264a7);margin:20px auto;border-radius:3px}
+.ms-cert .academy{text-align:center;color:#222;font-size:18px;font-weight:700;letter-spacing:5px;margin-top:25px}
+.ms-cert .dca-logo{text-align:center;font-size:35px;font-weight:700;color:#a71925;margin-top:12px}
+.ms-cert .dca-logo span{color:#d4af37}
+.ms-cert .content{text-align:center;position:relative;z-index:2}
+.ms-cert .level{display:inline-block;background:linear-gradient(90deg,#2b579a,#217346,#d24726);color:#fff;padding:9px 35px;font-size:13px;letter-spacing:3px;margin-top:20px;border-radius:20px;font-weight:700}
+.ms-cert .title{font-family:'Playfair Display',Georgia,'Noto Serif Sinhala','Nirmala UI',serif;font-size:44px;color:#171717;margin-top:20px;letter-spacing:2px;font-weight:700}
+.ms-cert .subtitle{font-size:15px;color:#777;letter-spacing:4px;margin-top:8px}
+.ms-cert .presented{font-size:16px;color:#555;margin-top:26px}
+.ms-cert .employee-name{font-family:'Playfair Display',Georgia,'Noto Serif Sinhala','Nirmala UI',serif;font-size:39px;color:#a71925;margin-top:15px;border-bottom:2px solid #d4af37;display:inline-block;padding:0 65px 10px;font-weight:700}
+.ms-cert .description{width:750px;margin:18px auto;font-size:15px;line-height:1.8;color:#555}
+.ms-cert .grade-line{display:flex;justify-content:center;gap:40px;margin:16px auto;flex-wrap:wrap}
+.ms-cert .g-item{text-align:center}
+.ms-cert .g-item .k{font-size:11px;letter-spacing:2px;color:#888;font-weight:700;text-transform:uppercase}
+.ms-cert .g-item .v{font-size:22px;font-weight:800;color:#a71925;margin-top:3px}
+.ms-cert .g-item .v.dp{color:#1a8f4d}
+.ms-cert .g-item .v.mp{color:#2b579a}
+.ms-cert .g-item .v.op{color:#d4af37}
+.ms-cert .training{margin:14px auto;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:940px}
+.ms-cert .training-item{background:#f8f5f5;border-left:3px solid #2b579a;padding:8px 16px;font-size:12px;color:#333;font-weight:600;border-radius:4px}
+.ms-cert .footer{display:flex;justify-content:space-around;margin-top:28px;padding:0 60px}
+.ms-cert .signature{width:230px;text-align:center}
+.ms-cert .signature-line{border-top:1px solid #555;margin-bottom:10px}
+.ms-cert .signature h4{font-size:13px;color:#222;margin:0}
+.ms-cert .signature p{font-size:11px;color:#888;margin:5px 0 0}
+.ms-cert .seal{position:absolute;right:80px;bottom:85px;width:100px;height:100px;border:3px solid #d4af37;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;color:#a71925;font-size:11px;font-weight:700;transform:rotate(-12deg);line-height:1.2;padding:10px}
+.ms-cert .serial{position:absolute;left:80px;bottom:88px;font-size:10px;color:#888;letter-spacing:1px}
+@media print{
+  body.ms-printing *{visibility:hidden}
+  body.ms-printing #msCertWrap,body.ms-printing #msCertWrap *{visibility:visible}
+  body.ms-printing .ms-overlay{position:static;overflow:visible}
+  #msCertWrap{position:absolute!important;left:0;top:0;width:1123px!important;height:794px!important;transform:none!important}
+  #msCertWrap .ms-cert{box-shadow:none!important}
+}
+@media (max-width:640px){
+  .ms-brand h2{font-size:17px}
+  .ms-nav-btn{font-size:11.5px;padding:7px 12px}
+  .ms-grid{grid-template-columns:1fr 1fr}
+  .ms-cat{padding:14px}
+  .ms-cat .ms-ic{width:44px;height:44px;font-size:22px}
+  .ms-cat h3{font-size:14.5px}
+  .ms-cat .ms-sub{font-size:11px}
+  .ms-detail-inner{padding:16px}
+  .ms-detail h2{font-size:18px}
+}
+/* language switch + notes (added) */
+.ms-lang{display:flex;gap:6px}
+.ms-lang button{padding:6px 12px;border:1px solid var(--bd);border-radius:20px;background:var(--card);color:var(--tx);font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.ms-lang button.on{background:var(--ms-word);border-color:var(--ms-word);color:#fff}
+.ms-note{font-size:12px;color:var(--mu);background:var(--bg);border:1px dashed var(--bd);border-radius:8px;padding:6px 10px;margin:0 0 12px}
+
 </style>
 </head>
 <body>
@@ -307,6 +492,33 @@ textarea{min-height:88px;resize:vertical;font-family:inherit}
 
 <div id="wel" class="hide"><div class="wbox"><div class="wave">👋</div><h2 id="wt"></h2><p id="ws" class="mu"></p></div></div>
 <div id="fx"></div>
+<!-- ============ MS OFFICE OVERLAY ============ -->
+<div id="msOverlay" class="ms-overlay hide" role="dialog" aria-label="Microsoft Office Knowledge Base">
+  <div class="ms-shell">
+    <header class="ms-head">
+      <button class="ms-back" onclick="msClose()" aria-label="Back" type="button">←</button>
+      <div class="ms-brand">
+        <div class="ms-logo">M</div>
+        <div>
+          <h2 id="msTitle">Microsoft Office</h2>
+          <p class="mu" id="msSub">Employee Knowledge Base · Edition 2026</p>
+        </div>
+      </div>
+      <div class="ms-lang" id="msLang">
+        <button type="button" data-mslang="si" onclick="msLang('si')">සිං</button>
+        <button type="button" data-mslang="en" onclick="msLang('en')">EN</button>
+        <button type="button" data-mslang="ta" onclick="msLang('ta')">த</button>
+      </div>
+      <nav class="ms-nav">
+        <button class="ms-nav-btn on" data-msnav="home" onclick="msNav('home')" type="button" id="msNavHome">📚 Learn</button>
+        <button class="ms-nav-btn" data-msnav="exam" onclick="msNav('exam')" type="button" id="msNavExam">📝 Exam</button>
+        <button class="ms-nav-btn" data-msnav="cert" onclick="msNav('cert')" type="button" id="msNavCert">🏆 Certificate</button>
+      </nav>
+    </header>
+    <main class="ms-body" id="msBody"></main>
+  </div>
+</div>
+
 <div id="toast"></div>
 <script type="text/html" id="cyberSrc"><!DOCTYPE html>
 <html lang="si">
@@ -1936,6 +2148,14 @@ function renderGrid(){
     el.onclick=function(){openMod(i)};
     g.appendChild(el);
   });
+  if(window.msCardHtml){
+    var ms=document.createElement('button');
+    ms.type='button';ms.className='tool card';
+    ms.style.animationDelay=(T.length*0.05)+'s';
+    ms.innerHTML=window.msCardHtml();
+    ms.onclick=function(){window.msOpen()};
+    g.appendChild(ms);
+  }
 }
 
 function updateProgress(){
@@ -2614,6 +2834,1742 @@ function makeFloaters(){
     enterApp();
   }
 })();
+</script>
+<script>
+/* MS Office module — translations (en = built into the module itself) */
+window.MSI18N = {
+U:{
+en:{
+ title:'Microsoft Office', sub:'Employee Knowledge Base · Edition 2026',
+ learn:'📚 Learn', exam:'📝 Exam', cert:'🏆 Certificate',
+ allCats:'← All categories', nTopics:'{n} subtopics', topicOf:'{c} · Topic {i} of {n}',
+ allTopics:'← All topics', prev:'← Previous', next:'Next →', takeExam:'📝 Take the exam', bodyNote:'',
+ examTitle:'Microsoft Office Essentials Exam', examSub:'20 questions · covering all 10 categories',
+ examIntro:'Answer all 20 questions to receive your grade and certificate.',
+ gDP:'Distinction Pass — 80–100', gMP:'Merit Pass — 65–79', gOP:'Ordinary Pass — 40–64', gF:'Fail — 0–39',
+ start:'Start Exam →', qHead:'Question {i} of {n}', examName:'MS Office Essentials Exam',
+ choose:'Choose one option', selected:'Answer selected', back:'← Back', nextQ:'Next →', finish:'Finish →',
+ grade:'Grade', scored:'You scored', retake:'🔄 Retake', viewCert:'🏆 View Certificate', backLearn:'📚 Back to Learn',
+ failNote:'<b>Not passed yet.</b> Review the categories, then try again. You need at least 40% to pass.',
+ DP:'Distinction Pass', MP:'Merit Pass', OP:'Ordinary Pass', F:'Fail',
+ lockTitle:'Your MS Office Certificate', lockDesc:'Complete the exam with a score of 40% or more to unlock your Microsoft Office Essentials certificate.',
+ certHead:'Microsoft Office Essentials — Certificate', fullName:'Full name for the certificate', ph:'e.g. Nimal Perera',
+ gen:'Generate →', print:'🖨️ Print / Save as PDF', regen:'🔄 Regenerate', defName:'Employee Name',
+ cLevel:'MICROSOFT OFFICE ESSENTIALS · 2026', cTitle:'Certificate of Achievement', cSub:'EMPLOYEE KNOWLEDGE BASE',
+ cPres:'This certificate is proudly presented to',
+ cDesc:'for successfully completing the Microsoft Office Essentials Knowledge Base and Examination, covering Word, Excel, PowerPoint, Outlook, Teams, security and professional standards.',
+ lGrade:'Grade', lResult:'Result', lScore:'Score', lDate:'Date', iSec:'Security', iPro:'Professional Standards',
+ sig1:'Head of Training', sig2:'Managing Director', seal:'MS<br>OFFICE<br>CERTIFIED', serial:'Serial',
+ cardSub:'Word · Excel · PowerPoint · Outlook · Teams + Exam', cardDone:'Certified ✓'
+},
+si:{
+ title:'Microsoft Office', sub:'සේවක දැනුම් පදනම · 2026 සංස්කරණය',
+ learn:'📚 ඉගෙන ගන්න', exam:'📝 විභාගය', cert:'🏆 සහතිකය',
+ allCats:'← සියලු කාණ්ඩ', nTopics:'උප මාතෘකා {n}', topicOf:'{c} · මාතෘකාව {i} / {n}',
+ allTopics:'← සියලු මාතෘකා', prev:'← පෙර', next:'ඊළඟ →', takeExam:'📝 විභාගයට පෙනී සිටින්න',
+ bodyNote:'සටහන: මාතෘකාවල විස්තරය, උපදෙස් සහ කෙටිමං දැනට English භාෂාවෙන් පමණක් ඇත. මාතෘකා, විභාගය සහ සහතිකය සිංහලෙන් ඇත.',
+ examTitle:'Microsoft Office මූලික විභාගය', examSub:'ප්‍රශ්න 20 · කාණ්ඩ 10ම ආවරණය',
+ examIntro:'ශ්‍රේණිය සහ සහතිකය ලබා ගැනීමට ප්‍රශ්න 20ටම පිළිතුරු දෙන්න.',
+ gDP:'විශිෂ්ට සමත් — 80–100', gMP:'ගෞරව සමත් — 65–79', gOP:'සාමාන්‍ය සමත් — 40–64', gF:'අසමත් — 0–39',
+ start:'විභාගය අරඹන්න →', qHead:'ප්‍රශ්නය {i} / {n}', examName:'MS Office මූලික විභාගය',
+ choose:'විකල්පයක් තෝරන්න', selected:'පිළිතුර තෝරා ඇත', back:'← ආපසු', nextQ:'ඊළඟ →', finish:'අවසන් කරන්න →',
+ grade:'ශ්‍රේණිය', scored:'ඔබේ ලකුණු', retake:'🔄 නැවත පෙනී සිටින්න', viewCert:'🏆 සහතිකය බලන්න', backLearn:'📚 ඉගෙනීමට',
+ failNote:'<b>තවම සමත් වී නැහැ.</b> කාණ්ඩ නැවත කියවා නැවත උත්සාහ කරන්න. සමත් වීමට අවම වශයෙන් 40%ක් අවශ්‍යයි.',
+ DP:'විශිෂ්ට සමත්', MP:'ගෞරව සමත්', OP:'සාමාන්‍ය සමත්', F:'අසමත්',
+ lockTitle:'ඔබේ MS Office සහතිකය', lockDesc:'Microsoft Office මූලික සහතිකය ලබා ගැනීමට විභාගයෙන් 40% හෝ ඊට වැඩි ලකුණු ලබා ගන්න.',
+ certHead:'Microsoft Office මූලික — සහතිකය', fullName:'සහතිකයට සම්පූර්ණ නම', ph:'උදා: නිමල් පෙරේරා',
+ gen:'සාදන්න →', print:'🖨️ මුද්‍රණය / PDF', regen:'🔄 නැවත සාදන්න', defName:'සේවකයාගේ නම',
+ cLevel:'MICROSOFT OFFICE මූලික · 2026', cTitle:'ජයග්‍රහණ සහතිකය', cSub:'සේවක දැනුම් පදනම',
+ cPres:'මෙම සහතිකය ප්‍රදානය කරනුයේ',
+ cDesc:'Word, Excel, PowerPoint, Outlook, Teams, ආරක්ෂාව සහ වෘත්තීය ප්‍රමිති ආවරණය කරන Microsoft Office මූලික දැනුම් පදනම සහ විභාගය සාර්ථකව සම්පූර්ණ කිරීම වෙනුවෙනි.',
+ lGrade:'ශ්‍රේණිය', lResult:'ප්‍රතිඵලය', lScore:'ලකුණු', lDate:'දිනය', iSec:'ආරක්ෂාව', iPro:'වෘත්තීය ප්‍රමිති',
+ sig1:'පුහුණු අංශ ප්‍රධානී', sig2:'කළමනාකාර අධ්‍යක්ෂ', seal:'MS<br>OFFICE<br>සහතික', serial:'අනු අංකය',
+ cardSub:'Word · Excel · PowerPoint · Outlook · Teams + විභාගය', cardDone:'සහතික ✓'
+},
+ta:{
+ title:'Microsoft Office', sub:'பணியாளர் அறிவுத் தளம் · 2026 பதிப்பு',
+ learn:'📚 கற்க', exam:'📝 தேர்வு', cert:'🏆 சான்றிதழ்',
+ allCats:'← அனைத்து வகைகள்', nTopics:'{n} துணைத் தலைப்புகள்', topicOf:'{c} · தலைப்பு {i} / {n}',
+ allTopics:'← அனைத்து தலைப்புகள்', prev:'← முந்தையது', next:'அடுத்தது →', takeExam:'📝 தேர்வு எழுதுங்கள்',
+ bodyNote:'குறிப்பு: தலைப்புகளின் விளக்கம், குறிப்புகள் மற்றும் குறுக்குவழிகள் தற்போது ஆங்கிலத்தில் மட்டுமே உள்ளன. தலைப்புகள், தேர்வு மற்றும் சான்றிதழ் தமிழில் உள்ளன.',
+ examTitle:'Microsoft Office அடிப்படைத் தேர்வு', examSub:'20 கேள்விகள் · 10 வகைகளையும் உள்ளடக்கியது',
+ examIntro:'தரம் மற்றும் சான்றிதழ் பெற 20 கேள்விகளுக்கும் பதிலளிக்கவும்.',
+ gDP:'சிறப்புத் தேர்ச்சி — 80–100', gMP:'தகுதித் தேர்ச்சி — 65–79', gOP:'சாதாரணத் தேர்ச்சி — 40–64', gF:'தோல்வி — 0–39',
+ start:'தேர்வைத் தொடங்கு →', qHead:'கேள்வி {i} / {n}', examName:'MS Office அடிப்படைத் தேர்வு',
+ choose:'ஒரு விருப்பத்தைத் தேர்ந்தெடுக்கவும்', selected:'பதில் தேர்ந்தெடுக்கப்பட்டது', back:'← பின்', nextQ:'அடுத்தது →', finish:'முடி →',
+ grade:'தரம்', scored:'உங்கள் மதிப்பெண்', retake:'🔄 மீண்டும் எழுது', viewCert:'🏆 சான்றிதழைப் பார்', backLearn:'📚 கற்றலுக்குத் திரும்பு',
+ failNote:'<b>இன்னும் தேர்ச்சி பெறவில்லை.</b> வகைகளை மீண்டும் படித்து மீண்டும் முயலுங்கள். தேர்ச்சிக்கு குறைந்தது 40% தேவை.',
+ DP:'சிறப்புத் தேர்ச்சி', MP:'தகுதித் தேர்ச்சி', OP:'சாதாரணத் தேர்ச்சி', F:'தோல்வி',
+ lockTitle:'உங்கள் MS Office சான்றிதழ்', lockDesc:'Microsoft Office அடிப்படைச் சான்றிதழைப் பெற தேர்வில் 40% அல்லது அதற்கு மேல் பெறுங்கள்.',
+ certHead:'Microsoft Office அடிப்படை — சான்றிதழ்', fullName:'சான்றிதழுக்கான முழுப் பெயர்', ph:'எ.கா: நிமல் பெரேரா',
+ gen:'உருவாக்கு →', print:'🖨️ அச்சிடு / PDF', regen:'🔄 மீண்டும் உருவாக்கு', defName:'பணியாளர் பெயர்',
+ cLevel:'MICROSOFT OFFICE அடிப்படை · 2026', cTitle:'சாதனைச் சான்றிதழ்', cSub:'பணியாளர் அறிவுத் தளம்',
+ cPres:'இந்தச் சான்றிதழ் வழங்கப்படுவது',
+ cDesc:'Word, Excel, PowerPoint, Outlook, Teams, பாதுகாப்பு மற்றும் தொழில்முறைத் தரங்களை உள்ளடக்கிய Microsoft Office அடிப்படை அறிவுத் தளம் மற்றும் தேர்வை வெற்றிகரமாக முடித்ததற்காக.',
+ lGrade:'தரம்', lResult:'முடிவு', lScore:'மதிப்பெண்', lDate:'தேதி', iSec:'பாதுகாப்பு', iPro:'தொழில்முறைத் தரங்கள்',
+ sig1:'பயிற்சித் தலைவர்', sig2:'நிர்வாக இயக்குநர்', seal:'MS<br>OFFICE<br>சான்று', serial:'வரிசை எண்',
+ cardSub:'Word · Excel · PowerPoint · Outlook · Teams + தேர்வு', cardDone:'சான்று ✓'
+}},
+
+/* category [title, description] */
+C:{
+si:{
+ found:['Office පදනම','Interface එක, ගොනු, කෙටිමං සහ සියලු යෙදුම්වලට පොදු මූලිකාංග.'],
+ common:['සියලු යෙදුම්වලට පොදු කුසලතා','පෙළ හැඩගැන්වීම, පින්තූර, hyperlinks, බෙදා ගැනීම, මුද්‍රණය.'],
+ word:['Microsoft Word','Styles, tables, TOC, mail merge සහ review මෙවලම් සහිත වෘත්තීය ලේඛන.'],
+ excel:['Microsoft Excel','සැබෑ කාර්යාල වැඩ සඳහා සූත්‍ර, functions, charts සහ දත්ත පිරිසිදු කිරීම.'],
+ excel2:['විශ්ලේෂණ සහ වාර්තා සඳහා Excel','Lookups, Pivot Tables, conditional formatting සහ dashboards.'],
+ ppt:['Microsoft PowerPoint','පැහැදිලි slides, හොඳ නිර්මාණය, සජීවීකරණ සහ විශ්වාසයෙන් ඉදිරිපත් කිරීම.'],
+ outlook:['Microsoft Outlook','වෘත්තීය email, inbox පාලනය, දින දර්ශන කළමනාකරණය සහ signatures.'],
+ teams:['Teams සහ සහයෝගීතාව','Teams, OneDrive, SharePoint, OneNote සහ Forms — නවීන කණ්ඩායම් වැඩ.'],
+ security:['ආරක්ෂාව සහ පෞද්ගලිකත්වය','Phishing, මුරපද, ආරක්ෂිත ලේඛන සහ රහස්‍යභාවය.'],
+ pro:['වෘත්තීය ප්‍රමිති','ගුණාත්මක චෙක්ලිස්ට්, කාලය ඉතිරි කරන පුරුදු, ලිවීමේ විලාසය.']
+},
+ta:{
+ found:['Office அடிப்படைகள்','Interface, கோப்புகள், குறுக்குவழிகள் மற்றும் அனைத்து செயலிகளுக்கும் பொதுவான அடிப்படைகள்.'],
+ common:['அனைத்து செயலிகளுக்கும் பொதுவான திறன்கள்','உரை வடிவமைப்பு, படங்கள், hyperlinks, பகிர்தல், அச்சிடுதல்.'],
+ word:['Microsoft Word','Styles, tables, TOC, mail merge மற்றும் review கருவிகளுடன் தொழில்முறை ஆவணங்கள்.'],
+ excel:['Microsoft Excel','உண்மையான அலுவலகப் பணிக்கான சூத்திரங்கள், functions, charts மற்றும் தரவு சுத்தம் செய்தல்.'],
+ excel2:['பகுப்பாய்வு மற்றும் அறிக்கைகளுக்கான Excel','Lookups, Pivot Tables, conditional formatting மற்றும் dashboards.'],
+ ppt:['Microsoft PowerPoint','தெளிவான slides, சிறந்த வடிவமைப்பு, அனிமேஷன்கள் மற்றும் நம்பிக்கையுடன் வழங்குதல்.'],
+ outlook:['Microsoft Outlook','தொழில்முறை மின்னஞ்சல், inbox கட்டுப்பாடு, நாட்காட்டி மேலாண்மை மற்றும் signatures.'],
+ teams:['Teams மற்றும் ஒத்துழைப்பு','Teams, OneDrive, SharePoint, OneNote மற்றும் Forms — நவீனக் குழுப்பணி.'],
+ security:['பாதுகாப்பு மற்றும் தனியுரிமை','Phishing, கடவுச்சொற்கள், பாதுகாக்கப்பட்ட ஆவணங்கள் மற்றும் ரகசியத்தன்மை.'],
+ pro:['தொழில்முறைத் தரங்கள்','தரச் சரிபார்ப்புப் பட்டியல்கள், நேரம் சேமிக்கும் பழக்கங்கள், எழுத்து நடை.']
+}},
+
+/* subtopic titles, same order as the module data */
+T:{
+si:{
+ found:['Office පැකේජයේ ඇත්තේ මොනවාද?','Office කවුළුවේ හඳුනාගත යුතු කොටස්','ගොනු: සුරැකීම, නම් කිරීම සහ ආකෘති','සර්වත්‍ර කෙටිමං','Copy, paste සහ Format Painter','Undo, recovery සහ ආරක්ෂිත ක්‍රම'],
+ common:['පෙළ නිවැරදිව හැඩගැන්වීම','පින්තූර, හැඩතල සහ screenshots','Hyperlinks සහ cross-references','Co-authoring සහ බෙදා ගැනීම','මුද්‍රණය සහ PDF ලෙස අපනයනය'],
+ word:['මුලින්ම Page setup','Styles — වැදගත්ම Word කුසලතාව','Paragraph හැඩගැන්වීම','Tables, headers සහ footers','Table of contents සහ captions','Find and Replace (විශේෂ කේත සමඟ)','Track Changes, Comments සහ Compare','Mail Merge','ප්‍රධාන Word කෙටිමං 30'],
+ excel:['දත්ත ඇතුළත් කිරීමේ නීති','වේගයෙන් තෝරා ගැනීම සහ ගමන් කිරීම','සංඛ්‍යා සහ මුදල් හැඩගැන්වීම','සූත්‍ර — මූලික කරුණු','සෑම සේවකයෙකුම දැනගත යුතු functions 15','Sorting, filtering සහ charts','Excel නිවැරදිව මුද්‍රණය කිරීම'],
+ excel2:['Lookup functions','කොන්දේසි සහිත සාරාංශ','පෙළ, දිනය සහ පිරිසිදු කිරීමේ functions','Pivot Tables — පේළි දහස් ගණනක් තත්පර වලින් සාරාංශ කිරීම','Conditional formatting','Dynamic arrays [365/2021]'],
+ ppt:['PowerPoint විවෘත කිරීමට පෙර සැලසුම් කරන්න','Slide නිර්මාණ නීති','Slide Master සහ themes','PowerPoint හි charts සහ tables','Animations සහ transitions','වෘත්තීයමය ලෙස ඉදිරිපත් කිරීම'],
+ outlook:['වෘත්තීය email එකක් ලිවීම','කාර්යබහුල inbox එක කළමනාකරණය','ඵලදායී ලෙස සෙවීම','දින දර්ශනය සහ රැස්වීම්','Contacts, groups සහ signatures'],
+ teams:['Microsoft Teams','OneDrive සහ SharePoint','OneNote','Microsoft Forms'],
+ security:['Phishing සහ email තර්ජන','මුරපද සහ sign-in','ලේඛන ආරක්ෂා කිරීම','Macros සහ බාහිර අන්තර්ගතය','දත්ත ආරක්ෂාව සහ රහස්‍යභාවය'],
+ pro:['ලේඛනයේ ගුණාත්මකභාවය — අවසන් චෙක්ලිස්ට්','කාලය ඉතිරි කරන පුරුදු','අන් අයගේ ගොනු සමඟ වැඩ කිරීම','කාර්යාල ලේඛන සඳහා ලිවීමේ විලාසය']
+},
+ta:{
+ found:['Office தொகுப்பில் என்ன உள்ளது?','Office சாளரத்தின் பகுதிகள்','கோப்புகள்: சேமித்தல், பெயரிடுதல் மற்றும் வடிவங்கள்','உலகளாவிய குறுக்குவழிகள்','Copy, paste மற்றும் Format Painter','Undo, மீட்பு மற்றும் பாதுகாப்பு வலைகள்'],
+ common:['உரையைச் சரியாக வடிவமைத்தல்','படங்கள், வடிவங்கள் மற்றும் screenshots','Hyperlinks மற்றும் cross-references','Co-authoring மற்றும் பகிர்தல்','அச்சிடுதல் மற்றும் PDF ஆக ஏற்றுமதி'],
+ word:['முதலில் Page setup','Styles — மிக முக்கியமான Word திறன்','Paragraph வடிவமைப்பு','Tables, headers மற்றும் footers','Table of contents மற்றும் captions','Find and Replace (சிறப்புக் குறியீடுகளுடன்)','Track Changes, Comments மற்றும் Compare','Mail Merge','முக்கிய Word குறுக்குவழிகள் 30'],
+ excel:['தரவு உள்ளிடும் விதிகள்','விரைவாகத் தேர்ந்தெடுத்தல் மற்றும் நகர்தல்','எண்கள் மற்றும் நாணய வடிவமைப்பு','சூத்திரங்கள் — அடிப்படைகள்','ஒவ்வொரு ஊழியரும் அறிய வேண்டிய 15 functions','Sorting, filtering மற்றும் charts','Excel ஐச் சரியாக அச்சிடுதல்'],
+ excel2:['Lookup functions','நிபந்தனைச் சுருக்கங்கள்','உரை, தேதி மற்றும் சுத்தம் செய்யும் functions','Pivot Tables — ஆயிரக்கணக்கான வரிசைகளை விநாடிகளில் சுருக்குதல்','Conditional formatting','Dynamic arrays [365/2021]'],
+ ppt:['PowerPoint ஐத் திறக்கும் முன் திட்டமிடுங்கள்','Slide வடிவமைப்பு விதிகள்','Slide Master மற்றும் themes','PowerPoint இல் charts மற்றும் tables','Animations மற்றும் transitions','தொழில்முறையாக வழங்குதல்'],
+ outlook:['தொழில்முறை மின்னஞ்சல் எழுதுதல்','பரபரப்பான inbox ஐ நிர்வகித்தல்','திறம்படத் தேடுதல்','நாட்காட்டி மற்றும் கூட்டங்கள்','Contacts, groups மற்றும் signatures'],
+ teams:['Microsoft Teams','OneDrive மற்றும் SharePoint','OneNote','Microsoft Forms'],
+ security:['Phishing மற்றும் மின்னஞ்சல் அச்சுறுத்தல்கள்','கடவுச்சொற்கள் மற்றும் sign-in','ஆவணங்களைப் பாதுகாத்தல்','Macros மற்றும் வெளி உள்ளடக்கம்','தரவுப் பாதுகாப்பு மற்றும் ரகசியத்தன்மை'],
+ pro:['ஆவணத் தரம் — இறுதிச் சரிபார்ப்புப் பட்டியல்','நேரம் சேமிக்கும் பழக்கங்கள்','பிறரின் கோப்புகளுடன் பணியாற்றுதல்','அலுவலக ஆவணங்களுக்கான எழுத்து நடை']
+}},
+
+/* exam: [question, options or 0 = keep the English options] */
+X:{
+si:[
+ ['සියලුම Office යෙදුම්වල ගොනුවක් සුරැකීමේ කෙටිමඟ කුමක්ද?',0],
+ ['පහත සඳහන් දෙයින් Microsoft Office යෙදුමක් නොවන්නේ කුමක්ද?',0],
+ ['අවසන්, සංස්කරණය කළ නොහැකි ලේඛන යැවීමට වඩාත් සුදුසු ආකෘතිය කුමක්ද?',0],
+ ['වෘත්තීය ලේඛන සඳහා වැදගත්ම Word කුසලතාව කුමක්ද?',['අකුරු වර්ණය වෙනස් කිරීම','Styles (Heading 1/2/3) භාවිතය','සෙවනැලි effects එකතු කිරීම','Cells ඒකාබද්ධ කිරීම']],
+ ['Word හි page break එකක් ඇතුළත් කරන කෙටිමඟ කුමක්ද?',0],
+ ['වෙනත් table එකකින් අගයක් සොයා ගන්නා Excel function එක කුමක්ද?',0],
+ ['Word සහ Outlook හි F7 මගින් සිදු වන්නේ කුමක්ද?',['ගොනුව විවෘත කරයි','අක්ෂර වින්‍යාස සහ ව්‍යාකරණ පරීක්ෂාව','පිටුව නැවුම් කරයි','පිටුව මුද්‍රණය කරයි']],
+ ['Print Preview විවෘත කරන කෙටිමඟ කුමක්ද?',0],
+ ['Ctrl+Z මගින් සිදු වන්නේ කුමක්ද?',['විශාල කරයි (Zoom)','Undo (පසුගමනය)','Formatting මකයි','Window එක වසයි']],
+ ['Pivot Table එකක ප්‍රධාන භාවිතය කුමක්ද?',['Slides සජීවීකරණය','විශාල දත්ත කට්ටල සාරාංශ කිරීම','ලිපි ලිවීම','Labels මුද්‍රණය']],
+ ['Find and Replace විවෘත කරන කෙටිමඟ කුමක්ද?',0],
+ ['PowerPoint හි Slide Master භාවිත කරන්නේ කුමකටද?',['Slides සජීවීකරණයට','සියලු slides වලට සමාන නිර්මාණයක් එක් වරක් යෙදීමට','Speaker notes එකතු කිරීමට','ඉදිරිපත් කිරීම පටිගත කිරීමට']],
+ ['සගයන් 5 දෙනෙකු සමඟ එකම ලේඛනයක් මත සහයෝගයෙන් වැඩ කිරීමට හොඳම ක්‍රමය කුමක්ද?',['Email attachments','තනි OneDrive/SharePoint link එකක් බෙදා ගැනීම','USB එක අතින් අතට දීම','සියලුදෙනාට පිටපත් මුද්‍රණය කිරීම']],
+ ['Phishing යනු කුමක්ද?',['සමාජ මාධ්‍ය ප්‍රවණතාවක්','තොරතුරු සොරකම් කිරීමට නිර්මාණය කළ වංචනික email','Spreadsheet සූත්‍රයක්','PowerPoint සජීවීකරණයක්']],
+ ['Word හි Track Changes භාවිත කරන්නේ කුමකටද?',['ගත කළ කාලය සටහන් කිරීමට','සමාලෝචනය සඳහා සෑම සංස්කරණයක්ම සටහන් කිරීමට','Document theme වෙනස් කිරීමට','රූප compress කිරීමට']],
+ ['Word හි ස්වයංක්‍රීය Table of Contents එකක් සාදා ගන්නේ කෙසේද?',['අතින් ටයිප් කිරීමෙන්','Heading 1/2/3 styles යොදා Insert → Table of Contents','වෙනත් ලේඛනයකින් පිටපත් කිරීමෙන්','Shape tool භාවිතයෙන්']],
+ ['වෘත්තීය ගොනු නම් කිරීමේ රටාවක් කුමක්ද?',0],
+ ['XLOOKUP යනු කුමක්ද?',['පැරණි Word macro එකක්','නවීන Excel lookup function එකක් [365/2021]','Outlook දින දර්ශන මෙවලමක්','PowerPoint transition එකක්']],
+ ['බොහෝ යෙදුම්වල "Find" කොටුව විවෘත කරන කෙටිමඟ කුමක්ද?',0],
+ ['Microsoft Teams හි ප්‍රධාන අරමුණ කුමක්ද?',['ලේඛන ලිවීම','Chat, රැස්වීම් සහ ගොනු සහයෝගීතාව','ඡායාරූප සංස්කරණය','DVD පිටපත් කිරීම']]
+],
+ta:[
+ ['அனைத்து Office செயலிகளிலும் கோப்பைச் சேமிக்கும் குறுக்குவழி எது?',0],
+ ['பின்வருவனவற்றில் Microsoft Office செயலி அல்லாதது எது?',0],
+ ['இறுதியான, திருத்த முடியாத ஆவணங்களை அனுப்ப சிறந்த வடிவம் எது?',0],
+ ['தொழில்முறை ஆவணங்களுக்கான மிக முக்கியமான Word திறன் எது?',['எழுத்து நிறத்தை மாற்றுதல்','Styles (Heading 1/2/3) பயன்படுத்துதல்','நிழல் விளைவுகளைச் சேர்த்தல்','Cells ஐ இணைத்தல்']],
+ ['Word இல் page break ஐச் செருகும் குறுக்குவழி எது?',0],
+ ['மற்றொரு table இலிருந்து மதிப்பைக் கண்டறியும் Excel function எது?',0],
+ ['Word மற்றும் Outlook இல் F7 என்ன செய்கிறது?',['கோப்பைத் திறக்கிறது','எழுத்துப்பிழை மற்றும் இலக்கணச் சரிபார்ப்பு','பக்கத்தைப் புதுப்பிக்கிறது','பக்கத்தை அச்சிடுகிறது']],
+ ['Print Preview ஐத் திறக்கும் குறுக்குவழி எது?',0],
+ ['Ctrl+Z என்ன செய்கிறது?',['பெரிதாக்குகிறது (Zoom)','Undo (செயலைத் திரும்பப்பெறு)','Formatting ஐ அழிக்கிறது','Window ஐ மூடுகிறது']],
+ ['Pivot Table இன் முக்கியப் பயன் என்ன?',['Slides ஐ அனிமேட் செய்தல்','பெரிய தரவுத் தொகுப்புகளைச் சுருக்குதல்','கடிதங்கள் எழுதுதல்','Labels அச்சிடுதல்']],
+ ['Find and Replace ஐத் திறக்கும் குறுக்குவழி எது?',0],
+ ['PowerPoint இல் Slide Master எதற்குப் பயன்படுகிறது?',['Slides ஐ அனிமேட் செய்ய','அனைத்து slides க்கும் ஒரே வடிவமைப்பை ஒரு முறை பயன்படுத்த','Speaker notes சேர்க்க','விளக்கக்காட்சியைப் பதிவு செய்ய']],
+ ['5 சக ஊழியர்களுடன் ஒரே ஆவணத்தில் ஒத்துழைக்க சிறந்த வழி எது?',['Email attachments','ஒரே OneDrive/SharePoint link ஐப் பகிர்தல்','USB ஐக் கைமாற்றுதல்','அனைவருக்கும் நகல்களை அச்சிடுதல்']],
+ ['Phishing என்றால் என்ன?',['சமூக ஊடகப் போக்கு','தகவல்களைத் திருட வடிவமைக்கப்பட்ட மோசடி மின்னஞ்சல்','Spreadsheet சூத்திரம்','PowerPoint அனிமேஷன்']],
+ ['Word இல் Track Changes எதற்குப் பயன்படுகிறது?',['செலவிட்ட நேரத்தைக் கண்காணிக்க','மதிப்பாய்வுக்காக ஒவ்வொரு திருத்தத்தையும் பதிவு செய்ய','Document theme ஐ மாற்ற','படங்களை compress செய்ய']],
+ ['Word இல் தானியங்கி Table of Contents ஐ உருவாக்குவது எப்படி?',['கையால் தட்டச்சு செய்தல்','Heading 1/2/3 styles பயன்படுத்தி Insert → Table of Contents','வேறு ஆவணத்திலிருந்து நகலெடுத்தல்','Shape tool பயன்படுத்துதல்']],
+ ['எது தொழில்முறைக் கோப்புப் பெயரிடும் முறை?',0],
+ ['XLOOKUP என்றால் என்ன?',['பழைய Word macro','நவீன Excel lookup function [365/2021]','Outlook நாட்காட்டிக் கருவி','PowerPoint transition']],
+ ['பெரும்பாலான செயலிகளில் "Find" பெட்டியைத் திறக்கும் குறுக்குவழி எது?',0],
+ ['Microsoft Teams இன் முதன்மை நோக்கம் என்ன?',['ஆவணங்கள் எழுதுதல்','Chat, கூட்டங்கள் மற்றும் கோப்பு ஒத்துழைப்பு','புகைப்படங்களைத் திருத்துதல்','DVD எரித்தல்']]
+]}
+};
+
+</script>
+<script>
+/* ============================================================
+   MICROSOFT OFFICE KNOWLEDGE BASE MODULE
+   Categories → Sub-topics → Exam → Certificate  (si / en / ta)
+   ============================================================ */
+(function(){
+var I18N = window.MSI18N;
+
+/* ---------- DATA ---------- */
+const MS_CATS = [
+{
+  id:'found', title:'Office Foundations', icon:'🏛️', color:'var(--ms-found)',
+  desc:'Interface, files, shortcuts & the basics that apply to every app.',
+  subtopics:[
+    {t:'What is in the Microsoft Office package?', s:'Word, Excel, PowerPoint, Outlook, Teams & more',
+     body:`<p>Microsoft Office includes several applications, each built for a specific type of work:</p>
+     <ul>
+       <li><strong>Word</strong> — letters, memos, reports, policies, contracts, minutes</li>
+       <li><strong>Excel</strong> — budgets, attendance, stock lists, payroll, dashboards</li>
+       <li><strong>PowerPoint</strong> — training decks, management reports, proposals</li>
+       <li><strong>Outlook</strong> — email, calendar, contacts, tasks</li>
+       <li><strong>Teams</strong> — chat, meetings, shared files, channels</li>
+       <li><strong>OneDrive / SharePoint</strong> — cloud file storage with version history</li>
+       <li><strong>OneNote</strong> — digital notebook for meetings and projects</li>
+       <li><strong>Forms</strong> — surveys, quizzes, feedback forms</li>
+     </ul>`,
+     tips:['Master the 20% of features that cover 80% of daily work.','Use the "Tell Me / Search" box (Alt + Q) to find any command by name.'],
+     visual:'grid'
+    },
+    {t:'The Office window — parts you must recognise', s:'Title bar, Ribbon, QAT, Backstage & Status bar',
+     body:`<p>Every Office app has the same skeleton. Learn it once and every app becomes easier:</p>
+     <ul>
+       <li><strong>Title bar</strong> — file name, AutoSave, Save, Undo/Redo, Search</li>
+       <li><strong>Quick Access Toolbar (QAT)</strong> — your personal shortcut bar</li>
+       <li><strong>Ribbon</strong> — tabs (Home, Insert, Layout…) grouping commands</li>
+       <li><strong>File tab (Backstage)</strong> — Open, Save As, Print, Share, Export</li>
+       <li><strong>Contextual tabs</strong> — appear only when needed (Table Design, Picture Format)</li>
+       <li><strong>Status bar</strong> — page count, word count, zoom, Excel sum/average</li>
+     </ul>`,
+     tips:['Right-click any command → "Add to Quick Access Toolbar" for daily tools.','Ctrl + F1 toggles the Ribbon.'],
+     visual:'window'
+    },
+    {t:'Files: saving, naming & formats', s:'Save early, save often — with professional names',
+     body:`<p>Know which format to use and how to name files so you can find them months later.</p>
+     <div class="ms-code">Pattern: YYYY-MM-DD_Department_Subject_vNN.ext
+Good:  2026-11-27_HR_Training-Plan_v02.docx
+Poor:  final final NEW (2).docx</div>
+     <p><strong>Formats:</strong> .docx / .xlsx / .pptx for editing · .pdf for sending · .csv for data exchange · .dotx/.xltx/.potx for templates.</p>`,
+     tips:['Start with year-month-day so files sort correctly.','Avoid "final", "final2", "latest" — use version numbers.','Turn on AutoSave when the file is in OneDrive/SharePoint.'],
+     visual:'files'
+    },
+    {t:'Universal shortcuts', s:'Ctrl+C, Ctrl+Z & the ones you will use daily',
+     body:`<p>These work in <strong>every</strong> Office app:</p>
+     <div class="ms-code">Ctrl+C / X / V  →  Copy / Cut / Paste
+Ctrl+S          →  Save
+Ctrl+Z / Y      →  Undo / Redo
+Ctrl+F / H      →  Find / Replace
+Ctrl+P          →  Print preview
+Ctrl+W          →  Close file
+Ctrl+Alt+Q      →  Search commands (Tell Me)
+Alt+Tab         →  Switch windows
+Win+Shift+S     →  Screenshot snip
+Win+V           →  Clipboard history</div>`,
+     tips:['Ctrl+S is your best friend — press it often.','Win+V saves you from re-copying the same text all day.'],
+     visual:'keys'
+    },
+    {t:'Copy, paste & format painter', s:'Avoid messy formatting from copy-paste',
+     body:`<p>After pasting, look for the small <strong>Paste Options</strong> icon and choose carefully:</p>
+     <ul>
+       <li><strong>Keep Source Formatting</strong> — copies look exactly (rarely what you want)</li>
+       <li><strong>Merge Formatting</strong> — adapts to surrounding style (best for most text)</li>
+       <li><strong>Keep Text Only</strong> — plain text (best from webpages/emails)</li>
+       <li><strong>Paste Special → Values</strong> (Excel) — freezes numbers, drops formulas</li>
+       <li><strong>Paste as Picture</strong> — static image for slides</li>
+     </ul>`,
+     tips:['Format Painter (🖌️) copies formatting: click once to apply once, double-click to apply many times.','Paste Values when sending spreadsheet results to avoid formula leaks.'],
+     visual:'paste'
+    },
+    {t:'Undo, recovery & safety nets', s:'Ctrl+Z, AutoRecover & Version History',
+     body:`<p>Two panic scenarios and how to survive them:</p>
+     <ul>
+       <li><strong>Ctrl+Z</strong> undoes many steps — use it freely.</li>
+       <li><strong>AutoRecover</strong>: File → Options → Save → tick "Save AutoRecover information every 5 minutes".</li>
+       <li><strong>Recover unsaved</strong>: File → Info → Manage Document → Recover Unsaved Documents.</li>
+       <li><strong>Version History</strong>: on OneDrive/SharePoint, File → Info → Version History restores any earlier version.</li>
+     </ul>`,
+     tips:['Before major edits: Save As with a new version number.','Version History beats "final_final_v3" every time.'],
+     visual:'recover'
+    }
+  ]
+},
+{
+  id:'common', title:'Common Skills Across All Apps', icon:'⚙️', color:'var(--ms-common)',
+  desc:'Text formatting, pictures, hyperlinks, sharing, printing — the shared toolkit.',
+  subtopics:[
+    {t:'Text formatting properly', s:'Two fonts, bold for emphasis, no ALL CAPS',
+     body:`<ul>
+       <li>Choose <strong>one or two fonts</strong> for the whole file (Calibri, Arial, Segoe UI).</li>
+       <li>Use <strong>bold</strong> for key points — not entire paragraphs.</li>
+       <li>Left-align body text. Centre only titles.</li>
+       <li>Avoid ALL CAPS and underlining (looks like a hyperlink).</li>
+       <li>Use the <strong>mini toolbar</strong> for fast formatting after selecting text.</li>
+     </ul>`,
+     tips:['Mixed fonts look unprofessional.','Justified text is fine in formal reports but can create wide gaps.'],
+     visual:'text'
+    },
+    {t:'Pictures, shapes & screenshots', s:'Insert, crop, compress & add alt text',
+     body:`<ol>
+       <li>Insert → <strong>Pictures</strong> (This Device / Stock / Online).</li>
+       <li>Use the Picture Format tab to Crop, Compress and add Alt Text.</li>
+       <li>In Word, set <strong>Wrap Text</strong> to In Line with Text (stable) or Square.</li>
+       <li>Use <strong>Insert → Screenshot</strong> or <strong>Win+Shift+S</strong> for captures.</li>
+       <li>Compress pictures (150 ppi / Email) before sending large files.</li>
+     </ol>`,
+     tips:['Always add Alt Text — accessibility matters and Check Accessibility will thank you.','Use PNG for screenshots, JPEG for photos.'],
+     visual:'image'
+    },
+    {t:'Hyperlinks & cross-references', s:'Ctrl+K and linking to internal sections',
+     body:`<p>Press <strong>Ctrl + K</strong> to link text to a web page, a file, an email address, or a place in the same document.</p>
+     <p>For internal documents, prefer a link to a <strong>SharePoint / OneDrive</strong> file rather than attaching a copy — everyone then sees the latest version.</p>`,
+     tips:['Use Bookmark + Hyperlink for jumping inside a long Word document.','Cross-reference updates automatically when headings move.'],
+     visual:'link'
+    },
+    {t:'Co-authoring & sharing', s:'One cloud file, many editors, zero "final_v3"',
+     body:`<ol>
+       <li>Save the file to <strong>OneDrive or a Teams / SharePoint library</strong>.</li>
+       <li>Click <strong>Share</strong> and choose permissions: Can edit or Can view.</li>
+       <li>Prefer <strong>Specific people</strong> for confidential files.</li>
+       <li>Several people can edit at once [365] — coloured cursors show who is where.</li>
+       <li>Use <strong>Comments</strong> (Ctrl+Alt+M in Word) and @mention colleagues.</li>
+     </ol>
+     <div class="ms-warn"><b>Warning:</b> Never email a file to five people for changes — you will get five different versions. Share a single cloud link instead.</div>`,
+     tips:['Co-authoring requires Microsoft 365.','Comments + @mentions replace long email chains.'],
+     visual:'share'
+    },
+    {t:'Printing & exporting to PDF', s:'Preview first, then print exactly what you need',
+     body:`<ul>
+       <li>Ctrl + P opens Print & Print Preview together — always preview first.</li>
+       <li>Check orientation, paper size (A4), margins, and double-sided.</li>
+       <li>Print only the pages you need: Pages 2-4, or Print Selection.</li>
+       <li>For sharing final versions, use <strong>Export → Create PDF</strong>.</li>
+     </ul>`,
+     tips:['Always check the PDF before sending — fonts and layout can shift.','PDF is un-editable — perfect for final deliverables.'],
+     visual:'print'
+    }
+  ]
+},
+{
+  id:'word', title:'Microsoft Word', icon:'📝', color:'var(--ms-word)',
+  desc:'Professional documents with styles, tables, TOC, mail merge & review tools.',
+  subtopics:[
+    {t:'Page setup first', s:'A4, margins, orientation',
+     body:`<ol>
+       <li>Layout → Size → <strong>A4</strong>.</li>
+       <li>Layout → Margins → <strong>Normal (2.54 cm)</strong>; Narrow (1.27 cm) only for dense forms.</li>
+       <li>Orientation: Portrait for text, Landscape for wide tables.</li>
+       <li>Set default font and spacing in the Styles group before typing.</li>
+     </ol>
+     <div class="ms-warn"><b>Never</b> press Enter repeatedly for a new page — use <strong>Ctrl+Enter</strong>. Never use the Spacebar to align — use tab stops, indents, or a table.</div>`,
+     tips:['Set up the page before typing a single word.','Use paragraph spacing (Home → Line & Paragraph Spacing) instead of blank Enters.'],
+     visual:'page'
+    },
+    {t:'Styles — the most important Word skill', s:'Heading 1, Heading 2, Normal — in that order',
+     body:`<p>A <strong>style</strong> is a saved set of formatting. Applying styles gives you:</p>
+     <ul>
+       <li>The ability to change the look of the entire document in seconds.</li>
+       <li>An automatic <strong>table of contents</strong>.</li>
+       <li>A <strong>Navigation Pane</strong> that lets you jump to any section.</li>
+     </ul>
+     <div class="ms-code">Title        → document title (once)
+Heading 1    → main sections (Ctrl+Alt+1)
+Heading 2    → sub-sections (Ctrl+Alt+2)
+Heading 3    → minor sub-sections (Ctrl+Alt+3)
+Normal       → body text (Ctrl+Shift+N)</div>`,
+     tips:['The #1 professional Word skill — do not manually format headings.','Right-click a style → Modify → change font once for the whole document.'],
+     visual:'styles'
+    },
+    {t:'Paragraph formatting', s:'Spacing, indents & alignment that matter',
+     body:`<ul>
+       <li><strong>Line spacing</strong> — 1.15 to 1.5 for body text; 1.0 for code/tables.</li>
+       <li><strong>Space before/after</strong> — 6pt after paragraph, 0 before.</li>
+       <li><strong>Indents</strong> — use paragraph indent, not spaces.</li>
+       <li><strong>Alignment</strong> — left for body; centre only for titles.</li>
+     </ul>`,
+     tips:['Set spacing once in Design → Paragraph Spacing.','Use the ruler to drag margins and indents visually.'],
+     visual:'para'
+    },
+    {t:'Tables, headers & footers', s:'Structure and identity for every page',
+     body:`<ul>
+       <li><strong>Insert → Table</strong> — use Insert Above/Below/Left/Right to add rows/columns.</li>
+       <li>Turn off "Borders" for invisible layout tables; use "Gridlines" for editing.</li>
+       <li><strong>Header / Footer</strong> — Insert → Header/Footer → choose layout.</li>
+       <li>Insert → <strong>Page Number</strong> → Bottom of Page → Plain Number 2 or 3.</li>
+       <li>Different First Page for a cover page without a number.</li>
+     </ul>`,
+     tips:['Double-click a header to edit it; Esc to return to text.','Page numbers belong in the footer, not typed manually.'],
+     visual:'table'
+    },
+    {t:'Table of contents & captions', s:'Automatic TOC from heading styles',
+     body:`<ol>
+       <li>Apply Heading 1/2/3 to sections (this is required).</li>
+       <li>References → <strong>Table of Contents</strong> → Automatic Table 1.</li>
+       <li>Right-click the TOC → <strong>Update Field</strong> whenever headings change.</li>
+       <li>Right-click a picture/table → Insert Caption for numbered captions ("Figure 1").</li>
+     </ol>`,
+     tips:['Never type a TOC manually — it will be wrong the moment a heading moves.','Use References → Cross-reference to point to a caption.'],
+     visual:'toc'
+    },
+    {t:'Find and Replace (with special codes)', s:'Ctrl+H — clean text in seconds',
+     body:`<ul>
+       <li>Ctrl+H opens Find and Replace.</li>
+       <li>Click <strong>More &gt;&gt;</strong> for special characters (^p paragraph, ^t tab).</li>
+       <li>Match case, whole words, format — use as needed.</li>
+       <li>Replace All is powerful — <strong>Save first</strong> in case you make a mistake.</li>
+     </ul>`,
+     tips:['Use ^p^p → ^p to collapse double paragraph marks.','Replace with Format lets you change all instances of a word to bold, italic, etc.'],
+     visual:'find'
+    },
+    {t:'Track Changes, Comments & Compare', s:'Collaborative review without confusion',
+     body:`<ul>
+       <li>Review → <strong>Track Changes</strong> (Ctrl+Shift+E) records every edit.</li>
+       <li>Insert a <strong>Comment</strong> (Ctrl+Alt+M) to discuss without editing.</li>
+       <li>Review → <strong>Accept</strong> / <strong>Reject</strong> each change.</li>
+       <li>Review → <strong>Compare</strong> → Compare Documents to see two versions side-by-side.</li>
+     </ul>`,
+     tips:['Turn Track Changes OFF before formatting your final version.','Use @mentions in comments to assign work.'],
+     visual:'track'
+    },
+    {t:'Mail Merge', s:'Personalised letters in minutes',
+     body:`<ol>
+       <li>Start with a <strong>main document</strong> (letter, envelope, label).</li>
+       <li>Mailings → <strong>Start Mail Merge</strong> → Letters.</li>
+       <li><strong>Select Recipients</strong> → Use an Existing List (Excel .xlsx works perfectly).</li>
+       <li>Insert <strong>Merge Fields</strong> where personalised data goes.</li>
+       <li><strong>Preview Results</strong> → check the first 3 recipients.</li>
+       <li><strong>Finish &amp; Merge</strong> → Print Documents or Edit Individual Documents.</li>
+     </ol>`,
+     tips:['Always Preview Results before printing.','Save the data source (Excel) next to the Word document so it can be re-merged later.'],
+     visual:'mail'
+    },
+    {t:'Top 30 Word shortcuts', s:'The ones that actually save time',
+     body:`<div class="ms-code">Ctrl+N          New document
+Ctrl+O          Open
+Ctrl+S          Save
+Ctrl+P          Print
+Ctrl+Z / Y      Undo / Redo
+Ctrl+F / H      Find / Replace
+Ctrl+B / I / U  Bold / Italic / Underline
+Ctrl+K          Insert hyperlink
+Ctrl+Alt+1/2/3  Heading 1/2/3
+Ctrl+Shift+N    Normal style
+Ctrl+Enter      Page break
+Ctrl+Shift+E    Track Changes
+Ctrl+Alt+M      New comment
+Ctrl+Shift+C/V  Copy / Paste formatting
+F7              Spelling & grammar
+F12             Save As
+Alt+Shift+↑/↓   Move paragraph up/down
+Shift+F3        Change case
+Ctrl+Shift+8    Show/hide ¶ marks
+Ctrl+Shift+V    Paste text only</div>`,
+     tips:['Learn 5 shortcuts a week — after a month you will never look back.','Alt+Shift+↑/↓ moves paragraphs without cut-paste.'],
+     visual:'keys'
+    }
+  ]
+},
+{
+  id:'excel', title:'Microsoft Excel', icon:'📊', color:'var(--ms-excel)',
+  desc:'Formulas, functions, charts, Pivot Tables & dashboards for real office work.',
+  subtopics:[
+    {t:'Data entry rules', s:'Clean data = clean analysis',
+     body:`<ul>
+       <li><strong>One data type per column</strong> — numbers, dates, text — never mix.</li>
+       <li><strong>One row = one record</strong>; row 1 = headers.</li>
+       <li>No blank rows or columns inside the data block.</li>
+       <li>Type dates as <strong>YYYY-MM-DD</strong> for sort-safe storage.</li>
+       <li>Use <strong>Data Validation</strong> for dropdowns and ranges.</li>
+       <li>Never merge cells in a data block — it breaks sorting and filtering.</li>
+     </ul>`,
+     tips:['Ctrl+; inserts today\'s date.','Ctrl+Shift+; inserts current time.','Use Format as Table (Ctrl+T) for instant banding and filters.'],
+     visual:'data'
+    },
+    {t:'Selecting, moving & navigating fast', s:'Keyboard-first Excel',
+     body:`<div class="ms-code">Ctrl+Arrow      Jump to data edge
+Ctrl+Home       A1
+Ctrl+End        Last used cell
+Ctrl+Shift+ArrowExtend selection
+Shift+Arrow     Extend selection by one
+Ctrl+Space      Select column
+Shift+Space     Select row
+Ctrl+A          Select all
+Alt+=           AutoSum
+F4              Toggle $absolute$
+F2              Edit cell in place
+Ctrl+PgUp/PgDn  Previous/next sheet</div>`,
+     tips:['F4 toggles absolute references when writing formulas.','Double-click the fill handle to autofill down.'],
+     visual:'select'
+    },
+    {t:'Formatting numbers & currency', s:'Make numbers readable at a glance',
+     body:`<ul>
+       <li>Select cells → Ctrl+1 (Format Cells) → Number/Currency/Date.</li>
+       <li>Right-align numbers; left-align text — Excel respects type.</li>
+       <li>Use <strong>thousands separators</strong> for large numbers (#,##0.00).</li>
+       <li>Use <strong>currency symbol</strong> only in the first row of a table, or in totals.</li>
+       <li>Use <strong>% format</strong> for percentages — never type the % character manually into a number.</li>
+     </ul>`,
+     tips:['Formatting is display only — the underlying number stays the same.','Use Format Painter to copy number formats.'],
+     visual:'num'
+    },
+    {t:'Formulas — the basics', s:'Start with = and use cell references',
+     body:`<ul>
+       <li>Every formula starts with <strong>=</strong>.</li>
+       <li>Use <strong>cell references</strong> (A1, B2:B10) — never type numbers directly into a formula.</li>
+       <li>Operators: <code>+ - * / ^</code></li>
+       <li><strong>Parentheses</strong> work exactly like maths: <code>=(A1+B1)*C1</code></li>
+       <li><strong>$</strong> locks a reference: <code>$A$1</code> (both), <code>$A1</code> (column), <code>A$1</code> (row).</li>
+       <li>Errors: <code>#DIV/0!</code> divide by zero, <code>#REF!</code> deleted reference, <code>#VALUE!</code> wrong type.</li>
+     </ul>`,
+     tips:['F4 cycles absolute/relative references.','Ctrl+` (backtick) shows all formulas on the sheet.'],
+     visual:'formula'
+    },
+    {t:'The 15 functions every employee must know', s:'SUM, AVERAGE, IF, VLOOKUP & friends',
+     body:`<div class="ms-code">SUM          Add a range            =SUM(B2:B20)
+AVERAGE      Mean                   =AVERAGE(B2:B20)
+COUNT        Count numbers          =COUNT(B2:B20)
+COUNTA       Count non-empty        =COUNTA(A2:A20)
+MIN / MAX    Smallest / largest     =MAX(B2:B20)
+IF           Conditional logic      =IF(B2&gt;100,"Yes","No")
+SUMIF        Sum with condition     =SUMIF(A2:A20,"HR",B2:B20)
+COUNTIF      Count with condition   =COUNTIF(A2:A20,"HR")
+VLOOKUP      Look up a value        =VLOOKUP(A2,Sheet2!A:C,3,FALSE)
+HLOOKUP      Horizontal lookup      =HLOOKUP(A2,Sheet2!A1:D5,2,FALSE)
+INDEX+MATCH  Flexible lookup        =INDEX(C:C,MATCH(A2,A:A,0))
+IFERROR      Clean errors           =IFERROR(VLOOKUP(...),"Not found")
+CONCAT / &   Combine text           =A2&" "&B2
+TEXT         Format as text         =TEXT(A2,"yyyy-mm-dd")
+TODAY / NOW  Dates                  =TODAY()</div>`,
+     tips:['VLOOKUP requires the lookup column to be leftmost — INDEX+MATCH does not.','IFERROR hides ugly errors — but check the cause first.'],
+     visual:'func'
+    },
+    {t:'Sorting, filtering & charts', s:'Turn rows of data into insight',
+     body:`<ul>
+       <li><strong>Sort</strong>: Data → Sort — by one column or by multiple levels.</li>
+       <li><strong>Filter</strong>: Ctrl+Shift+L toggles filter arrows on headers.</li>
+       <li><strong>Charts</strong>: select data → Insert → Recommended Charts, or pick:
+         <ul>
+           <li><strong>Column</strong> — compare categories</li>
+           <li><strong>Line</strong> — trend over time</li>
+           <li><strong>Pie</strong> — parts of a whole (max 5-7 slices)</li>
+           <li><strong>Bar</strong> — long category names</li>
+           <li><strong>Scatter</strong> — correlation between two numbers</li>
+         </ul>
+       </li>
+     </ul>`,
+     tips:['Never use a pie chart for more than 7 categories.','Always label axes and add a title — even to internal charts.'],
+     visual:'chart'
+    },
+    {t:'Printing Excel properly', s:'Portrait/Landscape, fit to one page, repeat headers',
+     body:`<ul>
+       <li>Page Layout → <strong>Orientation</strong> → Landscape for wide sheets.</li>
+       <li>Page Layout → <strong>Margins</strong> → Narrow for dense data.</li>
+       <li>Page Layout → <strong>Print Area → Set Print Area</strong>.</li>
+       <li>Page Layout → <strong>Print Titles → Rows to repeat at top</strong>.</li>
+       <li>Page Layout → <strong>Width: 1 page</strong> (scale to fit).</li>
+       <li>Always <strong>Ctrl+P preview</strong> before printing.</li>
+     </ul>`,
+     tips:['Print Titles saves you printing 20 pages of headerless data.','Turn off gridlines for printing — use borders on your data instead.'],
+     visual:'print'
+    }
+  ]
+},
+{
+  id:'excel2', title:'Excel for Analysis & Reporting', icon:'📈', color:'var(--ms-excel)',
+  desc:'Lookups, Pivot Tables, conditional formatting & dashboards.',
+  subtopics:[
+    {t:'Lookup functions', s:'VLOOKUP, INDEX+MATCH and XLOOKUP [365]',
+     body:`<p>Lookups let you pull data from one table into another — the most-used analysis skill.</p>
+     <div class="ms-code">VLOOKUP     =VLOOKUP(id, Table2!A:D, 4, FALSE)
+INDEX+MATCH =INDEX(D:D, MATCH(id, A:A, 0))
+XLOOKUP [365]=XLOOKUP(id, A:A, D:D, "Not found")</div>
+     <p><strong>VLOOKUP</strong> is fine for simple cases. <strong>INDEX+MATCH</strong> handles lookups where the key is not in the first column. <strong>XLOOKUP</strong> [365/2021] does both and includes a "not found" value.</p>`,
+     tips:['Set the last argument of VLOOKUP to FALSE for exact matches.','XLOOKUP is the cleanest option if your company has Microsoft 365.'],
+     visual:'lookup'
+    },
+    {t:'Conditional summaries', s:'SUMIF, COUNTIF, SUMIFS, COUNTIFS',
+     body:`<div class="ms-code">=SUMIF(A2:A20, "HR", B2:B20)         one condition
+=SUMIFS(B2:B20, A2:A20, "HR", C2:C20, "&gt;1000")  many conditions
+=COUNTIF(A2:A20, "HR")                count one condition
+=COUNTIFS(A2:A20, "HR", C2:C20, "&gt;1000")        count many conditions
+=AVERAGEIF(A2:A20, "HR", B2:B20)      average one condition</div>
+     <p>Note: <strong>SUMIFS</strong> and <strong>COUNTIFS</strong> take the sum range <em>first</em>, then pairs of criteria ranges and criteria.</p>`,
+     tips:['Wildcards work in criteria: "*HR*" matches anything containing HR.','Use cell references for criteria so you can change them without editing the formula.'],
+     visual:'sumif'
+    },
+    {t:'Text, date & cleaning functions', s:'TRIM, LEFT, MID, TEXT, DATEDIF',
+     body:`<div class="ms-code">TRIM         Remove extra spaces       =TRIM(A2)
+LEFT/RIGHT   Take characters            =LEFT(A2,4)
+MID          Take from middle           =MID(A2,2,3)
+LEN          Length                     =LEN(A2)
+UPPER/LOWER  Change case                =UPPER(A2)
+TEXT         Format as text             =TEXT(A2,"yyyy-mm-dd")
+YEAR/MONTH   Extract date parts         =YEAR(A2)
+DATEDIF      Days/months between dates  =DATEDIF(A2,B2,"d")
+CONCAT/TEXTJOIN Join text               =TEXTJOIN(", ",TRUE,A2:A10)</div>`,
+     tips:['TRIM is the #1 data-cleaning function — pasted data is full of hidden spaces.','TEXTJOIN [365] handles ranges directly with a delimiter.'],
+     visual:'text'
+    },
+    {t:'Pivot Tables — summarise thousands of rows in seconds', s:'Insert → PivotTable → drag fields',
+     body:`<ol>
+       <li>Select any cell inside your data.</li>
+       <li>Insert → <strong>PivotTable</strong> → New Worksheet.</li>
+       <li>Drag fields into four boxes:
+         <ul>
+           <li><strong>Rows</strong> — categories (department, product)</li>
+           <li><strong>Columns</strong> — sub-categories (month, region)</li>
+           <li><strong>Values</strong> — numbers to summarise (sum, count, average)</li>
+           <li><strong>Filters</strong> — top-level filters</li>
+         </ul>
+       </li>
+       <li>Right-click a value → <strong>Value Field Settings</strong> to change Sum/Count/Average.</li>
+       <li>Insert → <strong>Slicer</strong> for visual filtering.</li>
+     </ol>`,
+     tips:['Refresh a Pivot after data changes: right-click → Refresh (or Alt+F5).','Pivots do not auto-update — or use Format as Table (Ctrl+T) first so new rows are included.'],
+     visual:'pivot'
+    },
+    {t:'Conditional formatting', s:'Colour rules that make managers happy',
+     body:`<ul>
+       <li>Home → <strong>Conditional Formatting</strong> → Highlight Cells Rules.</li>
+       <li>Use <strong>Data Bars</strong> for in-cell bar charts.</li>
+       <li>Use <strong>Icon Sets</strong> (🟢 🟡 🔴) for KPI dashboards.</li>
+       <li>Use <strong>Colour Scales</strong> (red → green) for heat maps.</li>
+       <li>Use <strong>Formula</strong> for custom rules (e.g. highlight entire row if A2="Late").</li>
+     </ul>`,
+     tips:['Rule of thumb: no more than 3 colours on a single sheet.','Test the rule on the top and bottom of the data range.'],
+     visual:'cond'
+    },
+    {t:'Dynamic arrays [365/2021]', s:'FILTER, UNIQUE, SORT, XLOOKUP',
+     body:`<p>These functions <strong>spill</strong> results automatically into neighbouring cells.</p>
+     <div class="ms-code">=FILTER(A2:D100, C2:C100="HR")    rows that match
+=UNIQUE(A2:A100)                 remove duplicates
+=SORT(A2:A100, 1, -1)            sort descending
+=SORTBY(A2:D100, B2:B100, 1)     sort by column
+=SEQUENCE(10)                    numbers 1..10
+=LET(x, A2:A100, SUM(x*2))       name intermediate values</div>`,
+     tips:['A #SPILL! error means the cells next to the formula are not empty — clear them.','XLOOKUP is part of this modern family and pairs beautifully with FILTER.'],
+     visual:'dyn'
+    }
+  ]
+},
+{
+  id:'ppt', title:'Microsoft PowerPoint', icon:'🎬', color:'var(--ms-ppt)',
+  desc:'Clear slides, strong design, animations and confident presenting.',
+  subtopics:[
+    {t:'Plan before you open PowerPoint', s:'Story first, slides second',
+     body:`<ul>
+       <li>Write your <strong>3 key messages</strong> before opening PowerPoint.</li>
+       <li>Structure: <strong>Opening → Context → 3 points → Recommendation → Close</strong>.</li>
+       <li>One slide = one idea. If a slide has two messages, split it.</li>
+       <li>Prepare the <strong>story</strong> in Word first if the deck is complex.</li>
+     </ul>`,
+     tips:['The slide deck supports the speaker, it is not the speaker.','Rehearse with a timer — 1 slide ≈ 1-2 minutes maximum.'],
+     visual:'plan'
+    },
+    {t:'Slide design rules', s:'Less text, bigger fonts, more contrast',
+     body:`<div class="ms-code">DO                          DON'T
+─────────────────────        ─────────────────────
+One idea per slide           Dump everything on one slide
+6-8 bullets max              Full sentences in bullets
+Font size 24pt+ body         Tiny 12pt body text
+High-contrast text on bg     Yellow on white
+Consistent colours           Rainbow slide themes
+Real photos where possible   Generic clip art</div>`,
+     tips:['If your audience is reading the slide, they are not listening to you.','Use 2 fonts max — one for titles, one for body.'],
+     visual:'design'
+    },
+    {t:'Slide Master & themes', s:'Edit once, apply everywhere',
+     body:`<ol>
+       <li>View → <strong>Slide Master</strong>.</li>
+       <li>Edit the top-level slide — font, colours, logo, footer position.</li>
+       <li>Changes cascade to all layout slides below.</li>
+       <li>Insert → <strong>Themes</strong> to switch the whole deck's look.</li>
+       <li>Design → <strong>Variants</strong> for colour/background variations.</li>
+     </ol>`,
+     tips:['Never edit slides individually to change fonts — use the Slide Master.','Save your branded master as a .potx template.'],
+     visual:'master'
+    },
+    {t:'Charts & tables in PowerPoint', s:'Insert link, not copy-paste',
+     body:`<ul>
+       <li>Insert → <strong>Chart</strong> — pick the chart type before entering data.</li>
+       <li>Paste a live Excel chart: paste → <strong>Use Destination Theme &amp; Link Data</strong>.</li>
+       <li>Or embed a small Excel sheet inside the chart — "Edit Data" opens it.</li>
+       <li>Keep charts <strong>simple</strong>: one message per chart.</li>
+       <li>Animate a chart to reveal series one at a time (Animations → By Series).</li>
+     </ul>`,
+     tips:['Label axes and add a data source footnote.','Big number + short label beats a crowded chart.'],
+     visual:'chart2'
+    },
+    {t:'Animations & transitions', s:'Subtle always, flashy never',
+     body:`<ul>
+       <li><strong>Transitions</strong> — how one slide changes to the next (Morph, Fade, Push).</li>
+       <li><strong>Animations</strong> — how content appears on a slide (Appear, Fade, Wipe, Grow).</li>
+       <li>Use Animation <strong>Painter</strong> to copy an animation to other objects.</li>
+       <li>Set <strong>Start: With Previous / After Previous</strong> carefully.</li>
+       <li>For lists: reveal <strong>one bullet at a time</strong> (Animation → By Paragraph).</li>
+     </ul>`,
+     tips:['A good rule: no more than 1 animation per slide.','Morph transition is PowerPoint\'s most powerful effect — use it for before/after.'],
+     visual:'anim'
+    },
+    {t:'Presenting like a pro', s:'Presenter View, timer, Q&A',
+     body:`<ul>
+       <li><strong>Slide Show → Presenter View</strong> — speaker notes, timer, next slide.</li>
+       <li>Extend display: <strong>Win+P → Extend</strong> to use a projector properly.</li>
+       <li><strong>B key</strong> blacks out the screen (for discussion pauses).</li>
+       <li><strong>W key</strong> whites out the screen.</li>
+       <li><strong>Number + Enter</strong> jumps to a specific slide.</li>
+       <li><strong>S key</strong> opens Presenter View / All Slides.</li>
+       <li>Rehearse with Slide Show → <strong>Rehearse Timings</strong>.</li>
+     </ul>`,
+     tips:['Check projector resolution and font rendering before the meeting.','Always carry the deck on a USB and in the cloud.'],
+     visual:'present'
+    }
+  ]
+},
+{
+  id:'outlook', title:'Microsoft Outlook', icon:'📧', color:'var(--ms-outlook)',
+  desc:'Professional email, inbox control, calendar management & signatures.',
+  subtopics:[
+    {t:'Writing a professional email', s:'Subject, structure, sign-off',
+     body:`<div class="ms-code">Subject:  Action required — Q4 budget by Fri 12 Nov
+Greeting: Dear Mrs Perera / Hi Ravi,
+Body:     1 sentence context + 1 sentence ask + deadline
+Sign-off: Best regards, [Your name]</div>
+     <ul>
+       <li><strong>Subject</strong> — specific, actionable, with a date if relevant.</li>
+       <li><strong>One topic per email</strong> — split unrelated topics.</li>
+       <li><strong>Bold</strong> the action item or deadline.</li>
+       <li><strong>Sign-off</strong> consistent with your team's style.</li>
+     </ul>`,
+     tips:['Proofread with F7 before sending.','Read the email aloud once — awkward phrasing catches itself.','Never send email when you are angry — draft first.'],
+     visual:'email'
+    },
+    {t:'Managing a busy inbox', s:'Folders, rules, Quick Steps',
+     body:`<ul>
+       <li><strong>Rules</strong>: Home → Rules → Create Rule from Message — auto-move emails to folders.</li>
+       <li><strong>Quick Steps</strong>: one-click "Move to X + mark read + flag" actions.</li>
+       <li><strong>Categories</strong> + colour coding for cross-cutting topics.</li>
+       <li><strong>Focused Inbox</strong> to split priority from newsletters.</li>
+       <li><strong>Archive</strong> (Backspace) instead of Delete for older emails.</li>
+     </ul>`,
+     tips:['Inbox Zero rule: read, act, file, or delete — never leave unopened for weeks.','Use @mentions and categories instead of email-to-self reminders.'],
+     visual:'inbox'
+    },
+    {t:'Searching effectively', s:'Ctrl+E and search operators',
+     body:`<div class="ms-code">Ctrl+E             Search box
+from:ravi          Emails from Ravi
+to:me              Emails to you only
+subject:"budget"   Subject contains
+has:attachment     Any attachment
+received:lastweek  Last week
+category:HR        Tagged HR
+is:unread          Unread only
+OR / AND / NOT     Combine operators</div>`,
+     tips:['Combine operators: from:ravi has:attachment received:lastmonth','Search covers all folders unless you scope it.'],
+     visual:'search'
+    },
+    {t:'Calendar & meetings', s:'Scheduling, invitations, recurring events',
+     body:`<ul>
+       <li><strong>New Meeting</strong> (Ctrl+Shift+Q) — invite attendees and book a room.</li>
+       <li><strong>Scheduling Assistant</strong> shows everyone's availability.</li>
+       <li><strong>Recurrence</strong> for weekly/monthly meetings.</li>
+       <li><strong>Teams meeting</strong> button adds a video link automatically.</li>
+       <li><strong>Out of Office</strong>: File → Automatic Replies.</li>
+     </ul>`,
+     tips:['Set meeting length to 25/50 min to leave buffer time.','Include an agenda and pre-reading in the invite body.'],
+     visual:'cal'
+    },
+    {t:'Contacts, groups & signatures', s:'Signatures, distribution lists, contacts',
+     body:`<ul>
+       <li><strong>Signatures</strong>: File → Options → Mail → Signatures. Add name, role, phone, and a company logo if branded.</li>
+       <li><strong>Contact Groups</strong>: create a distribution list for a project team.</li>
+       <li><strong>Contacts</strong>: store details so you can autocomplete names and look up numbers.</li>
+       <li><strong>Out of Office</strong>: set an automatic reply before holidays.</li>
+     </ul>`,
+     tips:['Keep signatures short — 4-5 lines max.','Add your signature manually to emails on shared mailboxes to avoid duplication.'],
+     visual:'sig'
+    }
+  ]
+},
+{
+  id:'teams', title:'Teams & Collaboration', icon:'👥', color:'var(--ms-teams)',
+  desc:'Teams, OneDrive, SharePoint, OneNote & Forms — modern teamwork.',
+  subtopics:[
+    {t:'Microsoft Teams', s:'Channels, chat, meetings & files',
+     body:`<ul>
+       <li><strong>Teams</strong> contain <strong>Channels</strong> (topics within a team).</li>
+       <li><strong>Chat</strong> for 1:1 and small groups — searchable and kept.</li>
+       <li><strong>Meet</strong> (Ctrl+Shift+U) for video/audio calls with screen share.</li>
+       <li>Each channel has a <strong>Files</strong> tab — actually SharePoint under the hood.</li>
+       <li><strong>Tabs</strong> add apps (Planner, OneNote, Power BI).</li>
+     </ul>`,
+     tips:['Use @mentions in chats to alert specific people.','Turn on "Do not disturb" during deep work.','Record important meetings — recording is saved in the chat.'],
+     visual:'teams'
+    },
+    {t:'OneDrive & SharePoint', s:'Cloud storage with version history',
+     body:`<ul>
+       <li><strong>OneDrive</strong> — your personal cloud drive (like a USB in the cloud).</li>
+       <li><strong>SharePoint</strong> — shared team document library.</li>
+       <li>Both have <strong>version history</strong> — restore any earlier version.</li>
+       <li>Co-authoring works best when files live here, not attached to emails.</li>
+       <li><strong>Sync</strong> keeps a folder on your PC that stays up to date.</li>
+     </ul>`,
+     tips:['Never save to your Desktop for team files — use OneDrive/SharePoint.','Share the link, not the file, to keep version history and co-authoring.'],
+     visual:'cloud'
+    },
+    {t:'OneNote', s:'Your digital notebook',
+     body:`<ul>
+       <li>Organise: <strong>Notebook → Section → Page → Subpage</strong>.</li>
+       <li>Type anywhere by clicking — great for handwritten-style notes.</li>
+       <li><strong>Insert → Meeting Details</strong> to auto-import the Outlook meeting.</li>
+       <li><strong>Tag</strong> action items with To-Do checkboxes.</li>
+       <li>Search across all notebooks with Ctrl+E.</li>
+     </ul>`,
+     tips:['Use OneNote for meetings, Word for formal reports.','Share a notebook with your team for shared meeting notes.'],
+     visual:'note'
+    },
+    {t:'Microsoft Forms', s:'Surveys, quizzes & feedback',
+     body:`<ul>
+       <li>Create → <strong>New Form</strong> or <strong>New Quiz</strong>.</li>
+       <li>Add questions: Choice, Text, Rating, Date, Likert.</li>
+       <li><strong>Quiz mode</strong> adds points, correct answers, and auto-grading.</li>
+       <li>Responses → <strong>Open in Excel</strong> for analysis.</li>
+       <li>Share a link or QR code; collect answers in real time.</li>
+     </ul>`,
+     tips:['Forms + Power Automate can trigger workflows on responses.','For quizzes, always set points and correct answers in advance.'],
+     visual:'forms'
+    }
+  ]
+},
+{
+  id:'security', title:'Security & Privacy', icon:'🔒', color:'var(--ms-sec)',
+  desc:'Phishing, passwords, protected documents and confidentiality.',
+  subtopics:[
+    {t:'Phishing & email threats', s:'How to spot a fake email',
+     body:`<p><strong>Phishing</strong> = fraudulent email designed to steal information or install malware.</p>
+     <ul>
+       <li>Check the <strong>sender's actual address</strong>, not just the display name.</li>
+       <li>Hover over links — the real URL appears at the bottom.</li>
+       <li>Urgent language ("Act now or account closed") is a red flag.</li>
+       <li>Unexpected attachments — do not open.</li>
+       <li>Requests for passwords, payments, or gift cards — never comply by email.</li>
+     </ul>
+     <div class="ms-warn"><b>When in doubt:</b> report to IT, do not click. Legitimate companies will not ask for passwords by email.</div>`,
+     tips:['Enable MFA (multi-factor authentication) on every account.','Report phishing: Report Message → Phishing in Outlook.'],
+     visual:'phish'
+    },
+    {t:'Passwords & sign-in', s:'Long, unique, never reused',
+     body:`<ul>
+       <li><strong>Minimum 12 characters</strong>, mix of upper/lower/number/symbol.</li>
+       <li>Use a <strong>password manager</strong> — do not write passwords in notebooks.</li>
+       <li><strong>Never reuse</strong> passwords across work and personal accounts.</li>
+       <li>Turn on <strong>MFA</strong> for email, banking, cloud storage.</li>
+       <li>Lock your screen when leaving: <strong>Win+L</strong>.</li>
+     </ul>`,
+     tips:['A passphrase of 4 random words is more secure than "P@ssw0rd1".','Change passwords immediately if you suspect compromise.'],
+     visual:'lock'
+    },
+    {t:'Protecting documents', s:'Passwords, read-only, restricted editing',
+     body:`<ul>
+       <li>Word/Excel: File → Info → <strong>Protect Document</strong> → Encrypt with Password.</li>
+       <li>Mark as <strong>Final</strong> (but that is easily removed — do not rely on it).</li>
+       <li><strong>Restrict Editing</strong> to limit what others can change.</li>
+       <li>Before sharing externally: File → Info → <strong>Check for Issues → Inspect Document</strong> (removes author names, hidden data).</li>
+       <li>For sensitive PDFs, use a password + permissions via File → Export → Options.</li>
+     </ul>`,
+     tips:['Encryption is only as strong as the password — send it via a different channel (SMS, phone).','Inspect Document before sending files outside the company.'],
+     visual:'doclock'
+    },
+    {t:'Macros & external content', s:'Never enable macros you don\'t trust',
+     body:`<ul>
+       <li>Macros (VBA) automate tasks but can contain malware.</li>
+       <li>The yellow banner at the top of a file with macros is a <strong>warning</strong>.</li>
+       <li><strong>Enable only</strong> if you trust the source and know why the file needs macros.</li>
+       <li>Files from email attachments should open in <strong>Protected View</strong>.</li>
+     </ul>`,
+     tips:['If your org has a macro policy, follow it.','Save macro-enabled files as .xlsm / .docm.'],
+     visual:'macro'
+    },
+    {t:'Data protection & confidentiality', s:'GDPR-style basics every employee should know',
+     body:`<ul>
+       <li><strong>Only collect what you need</strong> — nothing extra.</li>
+       <li><strong>Store sensitive data</strong> in approved locations (OneDrive/SharePoint, not personal USB).</li>
+       <li><strong>Share on a need-to-know basis</strong> — least privilege.</li>
+       <li><strong>Delete</strong> data when no longer needed.</li>
+       <li><strong>Report data breaches</strong> immediately — time matters.</li>
+     </ul>`,
+     tips:['Do not forward confidential emails to personal accounts.','Lock your screen — Win+L.','Use BCC when emailing large groups to protect addresses.'],
+     visual:'privacy'
+    }
+  ]
+},
+{
+  id:'pro', title:'Professional Standards', icon:'🏆', color:'var(--ms-pro)',
+  desc:'Quality checklists, time-saving habits, writing style & ergonomics.',
+  subtopics:[
+    {t:'Document quality — final checklist', s:'Before you send anything',
+     body:`<ul>
+       <li>☐ Correct file name (date_department_subject_vNN)</li>
+       <li>☐ Spell check (F7) and read aloud (Review → Read Aloud)</li>
+       <li>☐ Consistent fonts and styles — no stray manual formatting</li>
+       <li>☐ Page numbers in the footer</li>
+       <li>☐ Headings styled as Heading 1/2/3</li>
+       <li>☐ Table of contents updated (if applicable)</li>
+       <li>☐ Images have alt text</li>
+       <li>☐ Check for Issues → Inspect Document (remove author data before external sharing)</li>
+       <li>☐ Exported to PDF for sending (if final)</li>
+     </ul>`,
+     tips:['Two-minute final check saves two-hour rework.','Read the first paragraph aloud — the ear catches what the eye misses.'],
+     visual:'check'
+    },
+    {t:'Time-saving habits', s:'Small habits, huge returns',
+     body:`<ul>
+       <li><strong>Templates</strong> — start every new document from one.</li>
+       <li><strong>Quick Access Toolbar</strong> — pin your top 5 commands.</li>
+       <li><strong>AutoCorrect</strong> — create shortcuts for common phrases.</li>
+       <li><strong>Paste Values</strong> instead of retyping numbers.</li>
+       <li><strong>Ctrl+S</strong> every 2 minutes.</li>
+       <li><strong>Close unused files</strong> — faster PC, fewer mistakes.</li>
+       <li><strong>One "master" file</strong> — not 17 copies.</li>
+     </ul>`,
+     tips:['Batch similar tasks — one block for email, one for reports.','Turn off notifications for 25-minute focus blocks.'],
+     visual:'time'
+    },
+    {t:'Working with other people\'s files', s:'Respect the structure',
+     body:`<ul>
+       <li><strong>Save a copy first</strong> — Save As with your name/version before editing.</li>
+       <li><strong>Do not change styles</strong> unless agreed.</li>
+       <li>Use <strong>Track Changes</strong> when reviewing.</li>
+       <li>Respect the author's formatting choices — they may be intentional.</li>
+       <li><strong>Comment</strong> questions instead of editing silently.</li>
+     </ul>`,
+     tips:['Never overwrite a file you received — Save As first.','Version History (cloud files) shows every change — helpful when something breaks.'],
+     visual:'collab'
+    },
+    {t:'Writing style for office documents', s:'Clear, active, professional',
+     body:`<ul>
+       <li><strong>Active voice</strong>: "The team approved the budget" > "The budget was approved by the team".</li>
+       <li><strong>Short sentences</strong> — average 15-20 words.</li>
+       <li><strong>Front-load information</strong> — main point first.</li>
+       <li><strong>One idea per paragraph</strong>.</li>
+       <li><strong>Consistent terminology</strong> — pick "customer" or "client", not both.</li>
+       <li><strong>Proofread</strong> with F7 and read aloud.</li>
+     </ul>`,
+     tips:['Avoid jargon unless writing for experts.','Write for the reader who has 30 seconds to skim.'],
+     visual:'style'
+    }
+  ]
+}
+];
+
+/* ---------- STATE ---------- */
+const MS_STATE = {
+  view:'home', page:'home', catId:null, subIdx:0,
+  exam:{ started:false, current:0, answers:[], score:0, finished:false },
+  cert:{ name:'', score:0, grade:'', date:'' }
+};
+var MS_KEY='dca_ms_result';
+try{ var sv=JSON.parse(localStorage.getItem(MS_KEY)||'null'); if(sv&&sv.grade)MS_STATE.cert=sv; }catch(e){}
+function msSave(){ try{ localStorage.setItem(MS_KEY,JSON.stringify(MS_STATE.cert)); }catch(e){} }
+
+/* ---------- EXAM DATA (20 questions) ---------- */
+const MS_EXAM = [
+  {q:'What is the shortcut to save a file in every Office app?', opts:['Ctrl+S','Ctrl+P','Ctrl+W','Alt+F4'], a:0},
+  {q:'Which is NOT a Microsoft Office application?', opts:['Word','Excel','Photoshop','Outlook'], a:2},
+  {q:'Which format is best for sending final, un-editable documents?', opts:['.docx','.pdf','.txt','.pptx'], a:1},
+  {q:'What is the most important Word skill for professional documents?', opts:['Changing the font colour','Using Styles (Heading 1/2/3)','Adding shadow effects','Merging cells'], a:1},
+  {q:'Which shortcut inserts a page break in Word?', opts:['Enter','Shift+Enter','Ctrl+Enter','Alt+Enter'], a:2},
+  {q:'Which Excel function finds a value in another table?', opts:['SUM','VLOOKUP','COUNT','TODAY'], a:1},
+  {q:'What does F7 do in Word and Outlook?', opts:['Opens the file','Spelling & grammar check','Refreshes the page','Prints the page'], a:1},
+  {q:'Which shortcut opens Print Preview?', opts:['Ctrl+S','Ctrl+O','Ctrl+P','Ctrl+F'], a:2},
+  {q:'What does Ctrl+Z do?', opts:['Zoom in','Undo','Zap formatting','Close window'], a:1},
+  {q:'What is a Pivot Table mainly used for?', opts:['Animating slides','Summarising large datasets','Writing letters','Printing labels'], a:1},
+  {q:'Which shortcut opens Find and Replace?', opts:['Ctrl+F','Ctrl+H','Ctrl+R','Ctrl+G'], a:1},
+  {q:'What is the Slide Master used for in PowerPoint?', opts:['Animating slides','Applying a consistent design once to all slides','Adding speaker notes','Recording the presentation'], a:1},
+  {q:'Best way to collaborate with 5 colleagues on one document?', opts:['Email attachments','Share a single OneDrive/SharePoint link','Pass a USB around','Print copies for everyone'], a:1},
+  {q:'What is phishing?', opts:['A social media trend','Fraudulent email designed to steal information','A spreadsheet formula','A PowerPoint animation'], a:1},
+  {q:'What is Track Changes used for in Word?', opts:['Tracking time spent','Recording every edit for review','Changing document theme','Compressing images'], a:1},
+  {q:'How do you create an automatic Table of Contents in Word?', opts:['Type it manually','Apply Heading 1/2/3 styles then Insert → Table of Contents','Copy it from another document','Use the Shape tool'], a:1},
+  {q:'Which is a professional file naming pattern?', opts:['final final NEW (2).docx','2026-11-27_HR_Training-Plan_v02.docx','asdf.docx','doc1.docx'], a:1},
+  {q:'What is XLOOKUP?', opts:['An old Word macro','A modern Excel lookup function [365/2021]','An Outlook calendar tool','A PowerPoint transition'], a:1},
+  {q:'Which shortcut opens the "Find" box in most apps?', opts:['Ctrl+F','Ctrl+P','Ctrl+S','Ctrl+W'], a:0},
+  {q:'What is the main purpose of Microsoft Teams?', opts:['Writing documents','Chat, meetings, and file collaboration','Editing photos','Burning DVDs'], a:1}
+];
+
+/* ---------- LANGUAGE HELPERS ---------- */
+function LG(){ var l=window.S&&window.S.lang; return (l==='si'||l==='ta'||l==='en')?l:'si'; }
+function tt(k,v){
+  var d=I18N.U[LG()]; var s=(d&&d[k]!=null)?d[k]:I18N.U.en[k];
+  if(v) for(var x in v) s=s.split('{'+x+'}').join(v[x]);
+  return s;
+}
+function cTitle(c){ return LG()==='en'?c.title:((I18N.C[LG()][c.id]||[])[0]||c.title); }
+function cDesc(c){ return LG()==='en'?c.desc:((I18N.C[LG()][c.id]||[])[1]||c.desc); }
+function sTitle(c,i){ var s=c.subtopics[i]; return LG()==='en'?s.t:(((I18N.T[LG()][c.id]||[])[i])||s.t); }
+function qOf(i){
+  var e=MS_EXAM[i]; if(LG()==='en')return e;
+  var tr=I18N.X[LG()][i]; return tr?{q:tr[0],opts:tr[1]||e.opts,a:e.a}:e;
+}
+function msApplyStatic(){
+  var g=function(id){return document.getElementById(id)};
+  if(!g('msTitle'))return;
+  g('msTitle').textContent=tt('title'); g('msSub').textContent=tt('sub');
+  g('msNavHome').textContent=tt('learn'); g('msNavExam').textContent=tt('exam'); g('msNavCert').textContent=tt('cert');
+  document.querySelectorAll('[data-mslang]').forEach(function(b){ b.classList.toggle('on',b.dataset.mslang===LG()); });
+}
+
+/* ---------- HELPERS ---------- */
+function msOpen(){
+  document.getElementById('msOverlay').classList.remove('hide');
+  document.body.style.overflow = 'hidden';
+  MS_STATE.view = 'home';
+  msNav('home');
+  document.getElementById('msOverlay').scrollTop = 0;
+}
+function msClose(){
+  document.getElementById('msOverlay').classList.add('hide');
+  document.body.style.overflow = '';
+  if(window.renderGrid){ try{ window.renderGrid(); }catch(e){} }
+}
+function msNav(view){
+  MS_STATE.view = view;
+  if(view==='home') MS_STATE.page='home';
+  msApplyStatic();
+  document.querySelectorAll('.ms-nav-btn').forEach(b =>
+    b.classList.toggle('on', b.dataset.msnav === view));
+  const body = document.getElementById('msBody');
+  if(view === 'home'){ body.innerHTML = renderHome(); }
+  else if(view === 'exam'){
+    body.innerHTML = renderExamShell();
+    if(MS_STATE.exam.finished){ msShowResult(); }
+    else if(MS_STATE.exam.started){ renderExamQuestion(); }
+    else { renderExamIntro(); }
+  }
+  else if(view === 'cert'){ body.innerHTML = renderCertTab(); if(MS_STATE.cert.name && MS_STATE.cert.grade && MS_STATE.cert.grade!=='F'){ msBuildCert(true); } }
+  body.style.animation = 'none';
+  void body.offsetWidth;
+  body.style.animation = 'fadeUp .35s ease';
+}
+function msLang(l){
+  var b=document.querySelector('.lang button[data-l="'+l+'"]');
+  if(b) b.click(); else if(window.S){ window.S.lang=l; }
+  msRefresh();
+}
+function msRefresh(){
+  var ov=document.getElementById('msOverlay');
+  if(!ov||ov.classList.contains('hide'))return;
+  msApplyStatic();
+  if(MS_STATE.view==='home'){
+    if(MS_STATE.page==='cat') msOpenCat(MS_STATE.catId);
+    else if(MS_STATE.page==='sub') msOpenSub(MS_STATE.catId,MS_STATE.subIdx);
+    else msNav('home');
+  } else msNav(MS_STATE.view);
+}
+
+/* ---------- HOME (category grid) ---------- */
+function renderHome(){
+  return `<div class="ms-grid">
+    ${MS_CATS.map(c => `
+      <button class="ms-cat" style="--ms-c:${c.color}" onclick="msOpenCat('${c.id}')" type="button">
+        <div class="ms-ic">${c.icon}</div>
+        <h3>${cTitle(c)}</h3>
+        <p class="ms-sub">${cDesc(c)}</p>
+        <div class="ms-count">${tt('nTopics',{n:c.subtopics.length})}</div>
+      </button>`).join('')}
+  </div>`;
+}
+
+/* ---------- CATEGORY (subtopic list) ---------- */
+function msOpenCat(id){
+  MS_STATE.catId = id; MS_STATE.page='cat'; MS_STATE.view='home';
+  const cat = MS_CATS.find(c => c.id === id);
+  const body = document.getElementById('msBody');
+  body.innerHTML = `
+    <div class="ms-st-head">
+      <div class="ms-st-title" style="--ms-c:${cat.color}">
+        <div class="ms-ic">${cat.icon}</div>
+        <div><h2>${cTitle(cat)}</h2><p>${cDesc(cat)}</p></div>
+      </div>
+      <button class="ms-nav-btn on" onclick="msNav('home')" type="button">${tt('allCats')}</button>
+    </div>
+    <div class="ms-list">
+      ${cat.subtopics.map((s, i) => `
+        <button class="ms-item" style="--ms-c:${cat.color}" onclick="msOpenSub('${id}', ${i})" type="button">
+          <div class="num">${String(i+1).padStart(2,'0')}</div>
+          <div class="txt"><b>${sTitle(cat,i)}</b><span>${LG()==='en'?s.s:''}</span></div>
+          <div class="arr">→</div>
+        </button>`).join('')}
+    </div>`;
+  document.getElementById('msOverlay').scrollTop = 0;
+}
+
+/* ---------- SUBTOPIC DETAIL ---------- */
+function msOpenSub(catId, idx){
+  MS_STATE.catId = catId; MS_STATE.subIdx = idx; MS_STATE.page='sub'; MS_STATE.view='home';
+  const cat = MS_CATS.find(c => c.id === catId);
+  const sub = cat.subtopics[idx];
+  const total = cat.subtopics.length;
+  const note = tt('bodyNote');
+  const body = document.getElementById('msBody');
+  body.innerHTML = `
+    <div class="ms-detail" style="--ms-c:${cat.color}">
+      <div class="bar-top"></div>
+      <div class="ms-detail-inner">
+        ${renderVisual(sub.visual, cat.color)}
+        <h2>${sTitle(cat,idx)}</h2>
+        <div class="sub">${tt('topicOf',{c:cTitle(cat),i:idx+1,n:total})}</div>
+        ${note ? `<div class="ms-note">${note}</div>` : ''}
+        ${sub.body}
+        ${sub.tips ? `<ul class="ms-tips">${sub.tips.map(t=>`<li>${t}</li>`).join('')}</ul>` : ''}
+        <div class="ms-nav-foot">
+          <button onclick="msOpenCat('${catId}')" type="button">${tt('allTopics')}</button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            ${idx>0 ? `<button onclick="msOpenSub('${catId}',${idx-1})" type="button">${tt('prev')}</button>` : ''}
+            ${idx<total-1 ? `<button class="primary" onclick="msOpenSub('${catId}',${idx+1})" type="button">${tt('next')}</button>` : `<button class="primary" onclick="msNav('exam')" type="button">${tt('takeExam')}</button>`}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('msOverlay').scrollTop = 0;
+}
+
+/* ---------- ANIMATED VISUALS ---------- */
+function renderVisual(kind, color){
+  const badge = `<span class="badge"><i></i>LIVE</span>`;
+  const styles = {
+    grid: `<svg viewBox="0 0 300 120">
+      <rect x="20" y="20" width="70" height="80" rx="6" fill="none" stroke="currentColor" stroke-width="2.5" class="ms-an-fade" style="animation-delay:0s"/>
+      <rect x="110" y="20" width="70" height="80" rx="6" fill="none" stroke="currentColor" stroke-width="2.5" class="ms-an-fade" style="animation-delay:.3s"/>
+      <rect x="200" y="20" width="70" height="80" rx="6" fill="none" stroke="currentColor" stroke-width="2.5" class="ms-an-fade" style="animation-delay:.6s"/>
+      <circle cx="55" cy="50" r="12" fill="currentColor" opacity=".7" class="ms-an-pop"/>
+      <circle cx="145" cy="50" r="12" fill="currentColor" opacity=".7" class="ms-an-pop" style="animation-delay:.3s"/>
+      <circle cx="235" cy="50" r="12" fill="currentColor" opacity=".7" class="ms-an-pop" style="animation-delay:.6s"/>
+      <rect x="35" y="72" width="40" height="6" rx="3" fill="currentColor" opacity=".5"/>
+      <rect x="125" y="72" width="40" height="6" rx="3" fill="currentColor" opacity=".5"/>
+      <rect x="215" y="72" width="40" height="6" rx="3" fill="currentColor" opacity=".5"/>
+    </svg>`,
+    window: `<svg viewBox="0 0 300 120">
+      <rect x="15" y="15" width="270" height="90" rx="6" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <rect x="15" y="15" width="270" height="20" rx="6" fill="currentColor" opacity=".2"/>
+      <circle cx="28" cy="25" r="4" fill="currentColor"/>
+      <circle cx="42" cy="25" r="4" fill="currentColor" opacity=".6"/>
+      <circle cx="56" cy="25" r="4" fill="currentColor" opacity=".4"/>
+      <rect x="30" y="45" width="50" height="8" rx="2" fill="currentColor" opacity=".8"/>
+      <rect x="30" y="60" width="90" height="6" rx="2" fill="currentColor" opacity=".4"/>
+      <rect x="30" y="72" width="70" height="6" rx="2" fill="currentColor" opacity=".4"/>
+      <rect x="30" y="84" width="110" height="6" rx="2" fill="currentColor" opacity=".4"/>
+      <circle cx="250" cy="25" r="3" fill="currentColor" class="ms-an-blink"/>
+    </svg>`,
+    files: `<svg viewBox="0 0 300 120">
+      <rect x="40" y="30" width="55" height="70" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <rect x="105" y="20" width="55" height="80" rx="4" fill="none" stroke="currentColor" stroke-width="2.5" class="ms-an-pop"/>
+      <rect x="170" y="30" width="55" height="70" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <path d="M60 55 L60 85 M60 85 L52 77 M60 85 L68 77" stroke="currentColor" stroke-width="2" fill="none" class="ms-an-fade"/>
+      <path d="M125 45 L125 75 M125 75 L117 67 M125 75 L133 67" stroke="currentColor" stroke-width="2" fill="none" class="ms-an-fade" style="animation-delay:.4s"/>
+      <path d="M190 55 L190 85 M190 85 L182 77 M190 85 L198 77" stroke="currentColor" stroke-width="2" fill="none" class="ms-an-fade" style="animation-delay:.8s"/>
+    </svg>`,
+    keys: `<svg viewBox="0 0 300 120">
+      <g class="ms-an-float">
+        <rect x="40" y="40" width="60" height="40" rx="6" fill="currentColor" opacity=".85"/>
+        <text x="70" y="66" text-anchor="middle" fill="#fff" font-size="16" font-weight="900">Ctrl</text>
+      </g>
+      <g class="ms-an-float" style="animation-delay:.5s">
+        <rect x="120" y="40" width="60" height="40" rx="6" fill="currentColor" opacity=".7"/>
+        <text x="150" y="66" text-anchor="middle" fill="#fff" font-size="16" font-weight="900">S</text>
+      </g>
+      <text x="205" y="66" font-size="20" fill="currentColor" class="ms-an-blink" font-weight="900">=</text>
+      <text x="230" y="66" font-size="20" fill="currentColor" opacity=".7">Save</text>
+    </svg>`,
+    paste: `<svg viewBox="0 0 300 120">
+      <rect x="40" y="25" width="80" height="80" rx="5" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <rect x="60" y="15" width="40" height="20" rx="3" fill="currentColor" opacity=".6"/>
+      <rect x="180" y="25" width="80" height="80" rx="5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="4 4" class="ms-an-fade"/>
+      <path d="M130 65 L170 65 M170 65 L162 57 M170 65 L162 73" stroke="currentColor" stroke-width="3" fill="none" class="ms-an-fade" style="animation-delay:.4s"/>
+    </svg>`,
+    recover: `<svg viewBox="0 0 300 120">
+      <path d="M150 30 A45 45 0 1 0 195 75" fill="none" stroke="currentColor" stroke-width="4" class="ms-an-draw"/>
+      <path d="M195 75 L205 65 L195 85 Z" fill="currentColor"/>
+      <text x="150" y="105" text-anchor="middle" fill="currentColor" font-size="13" font-weight="800" class="ms-an-fade">RECOVER</text>
+    </svg>`,
+    text: `<svg viewBox="0 0 300 120">
+      <rect x="30" y="20" width="240" height="10" rx="3" fill="currentColor" opacity=".7"/>
+      <rect x="30" y="42" width="200" height="6" rx="3" fill="currentColor" opacity=".4"/>
+      <rect x="30" y="56" width="220" height="6" rx="3" fill="currentColor" opacity=".4"/>
+      <rect x="30" y="70" width="180" height="6" rx="3" fill="currentColor" opacity=".4"/>
+      <rect x="30" y="84" width="240" height="6" rx="3" fill="currentColor" opacity=".4"/>
+      <rect x="30" y="98" width="160" height="6" rx="3" fill="currentColor" opacity=".4"/>
+    </svg>`,
+    image: `<svg viewBox="0 0 300 120">
+      <rect x="40" y="25" width="220" height="70" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <circle cx="75" cy="50" r="8" fill="currentColor" opacity=".7" class="ms-an-pop"/>
+      <path d="M40 95 L110 55 L160 75 L220 40 L260 95 Z" fill="currentColor" opacity=".5" class="ms-an-fade"/>
+    </svg>`,
+    link: `<svg viewBox="0 0 300 120">
+      <path d="M80 60 Q120 30 150 60 Q180 90 220 60" fill="none" stroke="currentColor" stroke-width="3" class="ms-an-draw"/>
+      <circle cx="80" cy="60" r="8" fill="currentColor" class="ms-an-pop"/>
+      <circle cx="220" cy="60" r="8" fill="currentColor" class="ms-an-pop" style="animation-delay:.5s"/>
+      <text x="150" y="110" text-anchor="middle" fill="currentColor" font-size="12" font-weight="800">CTRL + K</text>
+    </svg>`,
+    share: `<svg viewBox="0 0 300 120">
+      <circle cx="80" cy="60" r="18" fill="currentColor" opacity=".8" class="ms-an-pop"/>
+      <circle cx="150" cy="35" r="18" fill="currentColor" opacity=".6" class="ms-an-pop" style="animation-delay:.3s"/>
+      <circle cx="150" cy="85" r="18" fill="currentColor" opacity=".6" class="ms-an-pop" style="animation-delay:.6s"/>
+      <circle cx="220" cy="60" r="18" fill="currentColor" opacity=".8" class="ms-an-pop" style="animation-delay:.9s"/>
+      <path d="M98 60 L132 60 M168 60 L202 60" stroke="currentColor" stroke-width="2.5" class="ms-an-fade"/>
+    </svg>`,
+    print: `<svg viewBox="0 0 300 120">
+      <rect x="80" y="30" width="140" height="60" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <rect x="100" y="10" width="100" height="30" rx="3" fill="currentColor" opacity=".4"/>
+      <rect x="100" y="85" width="100" height="25" rx="3" fill="currentColor" opacity=".4"/>
+      <circle cx="200" cy="60" r="4" fill="currentColor" class="ms-an-blink"/>
+    </svg>`,
+    page: `<svg viewBox="0 0 300 120">
+      <rect x="100" y="15" width="100" height="90" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <rect x="115" y="30" width="70" height="6" rx="3" fill="currentColor" opacity=".7"/>
+      <rect x="115" y="45" width="55" height="4" rx="2" fill="currentColor" opacity=".4"/>
+      <rect x="115" y="55" width="70" height="4" rx="2" fill="currentColor" opacity=".4"/>
+      <rect x="115" y="65" width="60" height="4" rx="2" fill="currentColor" opacity=".4"/>
+      <text x="150" y="90" text-anchor="middle" fill="currentColor" font-size="9" font-weight="800" class="ms-an-fade">A4 · Normal</text>
+    </svg>`,
+    styles: `<svg viewBox="0 0 300 120">
+      <text x="40" y="45" fill="currentColor" font-size="24" font-weight="900">H1</text>
+      <text x="40" y="75" fill="currentColor" font-size="16" font-weight="700" opacity=".7">H2</text>
+      <text x="40" y="100" fill="currentColor" font-size="12" font-weight="400" opacity=".5">Normal</text>
+      <rect x="120" y="30" width="150" height="6" rx="3" fill="currentColor" opacity=".6" class="ms-an-fade"/>
+      <rect x="120" y="60" width="130" height="4" rx="2" fill="currentColor" opacity=".4" class="ms-an-fade" style="animation-delay:.3s"/>
+      <rect x="120" y="85" width="150" height="3" rx="2" fill="currentColor" opacity=".4" class="ms-an-fade" style="animation-delay:.6s"/>
+    </svg>`,
+    para: `<svg viewBox="0 0 300 120">
+      <rect x="30" y="25" width="240" height="6" rx="3" fill="currentColor" opacity=".8"/>
+      <rect x="30" y="42" width="220" height="4" rx="2" fill="currentColor" opacity=".4"/>
+      <rect x="30" y="54" width="240" height="4" rx="2" fill="currentColor" opacity=".4"/>
+      <rect x="30" y="66" width="200" height="4" rx="2" fill="currentColor" opacity=".4"/>
+      <rect x="30" y="85" width="240" height="6" rx="3" fill="currentColor" opacity=".8"/>
+      <rect x="30" y="102" width="180" height="4" rx="2" fill="currentColor" opacity=".4"/>
+    </svg>`,
+    table: `<svg viewBox="0 0 300 120">
+      <rect x="30" y="25" width="240" height="80" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <line x1="30" y1="50" x2="270" y2="50" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="30" y1="75" x2="270" y2="75" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="110" y1="25" x2="110" y2="105" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="190" y1="25" x2="190" y2="105" stroke="currentColor" stroke-width="1.5"/>
+      <rect x="30" y="25" width="240" height="25" fill="currentColor" opacity=".2"/>
+    </svg>`,
+    toc: `<svg viewBox="0 0 300 120">
+      <text x="40" y="35" fill="currentColor" font-size="14" font-weight="800">Contents</text>
+      <line x1="40" y1="42" x2="260" y2="42" stroke="currentColor" stroke-width="1.5"/>
+      <text x="40" y="62" fill="currentColor" font-size="11">1. Introduction</text>
+      <text x="260" y="62" fill="currentColor" font-size="11" text-anchor="end">3</text>
+      <text x="40" y="82" fill="currentColor" font-size="11">2. Method</text>
+      <text x="260" y="82" fill="currentColor" font-size="11" text-anchor="end">7</text>
+      <text x="40" y="102" fill="currentColor" font-size="11">3. Results</text>
+      <text x="260" y="102" fill="currentColor" font-size="11" text-anchor="end">12</text>
+    </svg>`,
+    find: `<svg viewBox="0 0 300 120">
+      <circle cx="120" cy="55" r="30" fill="none" stroke="currentColor" stroke-width="4" class="ms-an-pop"/>
+      <line x1="142" y1="77" x2="180" y2="115" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+      <text x="230" y="60" fill="currentColor" font-size="16" font-weight="900">Ctrl</text>
+      <text x="230" y="90" fill="currentColor" font-size="16" font-weight="900">+H</text>
+    </svg>`,
+    track: `<svg viewBox="0 0 300 120">
+      <rect x="30" y="30" width="240" height="60" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <rect x="45" y="45" width="100" height="6" rx="3" fill="currentColor" opacity=".5"/>
+      <rect x="45" y="60" width="180" height="6" rx="3" fill="currentColor" opacity=".4"/>
+      <text x="200" y="80" fill="currentColor" font-size="10" font-weight="700" class="ms-an-blink">@mention</text>
+    </svg>`,
+    mail: `<svg viewBox="0 0 300 120">
+      <rect x="40" y="30" width="100" height="60" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <path d="M40 40 L90 65 L140 40" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M155 60 L185 60 M185 60 L177 52 M185 60 L177 68" stroke="currentColor" stroke-width="3" fill="none" class="ms-an-fade"/>
+      <rect x="200" y="30" width="70" height="60" rx="4" fill="none" stroke="currentColor" stroke-width="2.5" class="ms-an-fade" style="animation-delay:.5s"/>
+    </svg>`,
+    data: `<svg viewBox="0 0 300 120">
+      <rect x="20" y="20" width="260" height="80" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+      <line x1="20" y1="45" x2="280" y2="45" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="20" y1="65" x2="280" y2="65" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="20" y1="85" x2="280" y2="85" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="80" y1="20" x2="80" y2="100" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="140" y1="20" x2="140" y2="100" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="200" y1="20" x2="200" y2="100" stroke="currentColor" stroke-width="1.5"/>
+      <rect x="20" y="20" width="260" height="25" fill="currentColor" opacity=".2"/>
+    </svg>`,
+    select: `<svg viewBox="0 0 300 120">
+      <rect x="30" y="20" width="240" height="80" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <rect x="80" y="45" width="60" height="40" fill="currentColor" opacity=".3" class="ms-an-fade"/>
+      <rect x="140" y="45" width="60" height="40" fill="currentColor" opacity=".5" class="ms-an-fade" style="animation-delay:.4s"/>
+      <path d="M80 90 Q140 110 200 90" stroke="currentColor" stroke-width="2" fill="none"/>
+    </svg>`,
+    num: `<svg viewBox="0 0 300 120">
+      <text x="30" y="45" fill="currentColor" font-size="20" font-weight="900">1,250</text>
+      <text x="30" y="75" fill="currentColor" font-size="20" font-weight="900" class="ms-an-fade">$4,300</text>
+      <text x="30" y="105" fill="currentColor" font-size="20" font-weight="900" opacity=".7">45%</text>
+    </svg>`,
+    formula: `<svg viewBox="0 0 300 120">
+      <text x="30" y="55" fill="currentColor" font-size="26" font-weight="900" class="ms-an-blink">=</text>
+      <text x="60" y="55" fill="currentColor" font-size="18" font-weight="700">SUM(A1:A10)</text>
+      <text x="30" y="90" fill="currentColor" font-size="18" font-weight="700" opacity=".7">=IF(B2&gt;100,"Yes","No")</text>
+    </svg>`,
+    func: `<svg viewBox="0 0 300 120">
+      <g class="ms-an-float"><rect x="30" y="30" width="70" height="30" rx="4" fill="currentColor" opacity=".8"/><text x="65" y="50" text-anchor="middle" fill="#fff" font-size="11" font-weight="800">SUM</text></g>
+      <g class="ms-an-float" style="animation-delay:.4s"><rect x="115" y="30" width="80" height="30" rx="4" fill="currentColor" opacity=".6"/><text x="155" y="50" text-anchor="middle" fill="#fff" font-size="11" font-weight="800">VLOOKUP</text></g>
+      <g class="ms-an-float" style="animation-delay:.8s"><rect x="210" y="30" width="70" height="30" rx="4" fill="currentColor" opacity=".8"/><text x="245" y="50" text-anchor="middle" fill="#fff" font-size="11" font-weight="800">IF</text></g>
+      <text x="150" y="95" text-anchor="middle" fill="currentColor" font-size="13" font-weight="800">15 must-know functions</text>
+    </svg>`,
+    chart: `<svg viewBox="0 0 300 120">
+      <g class="ms-an-bar"><rect x="40" y="40" width="22" height="50" fill="currentColor" opacity=".8"/></g>
+      <g class="ms-an-bar" style="animation-delay:.3s"><rect x="75" y="25" width="22" height="65" fill="currentColor" opacity=".7"/></g>
+      <g class="ms-an-bar" style="animation-delay:.6s"><rect x="110" y="55" width="22" height="35" fill="currentColor" opacity=".6"/></g>
+      <g class="ms-an-bar" style="animation-delay:.9s"><rect x="145" y="15" width="22" height="75" fill="currentColor" opacity=".9"/></g>
+      <g class="ms-an-bar" style="animation-delay:1.2s"><rect x="180" y="35" width="22" height="55" fill="currentColor" opacity=".7"/></g>
+      <line x1="30" y1="95" x2="270" y2="95" stroke="currentColor" stroke-width="2"/>
+    </svg>`,
+    lookup: `<svg viewBox="0 0 300 120">
+      <rect x="30" y="25" width="100" height="70" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+      <rect x="170" y="25" width="100" height="70" rx="3" fill="none" stroke="currentColor" stroke-width="2" class="ms-an-fade"/>
+      <path d="M130 60 Q150 40 170 60" stroke="currentColor" stroke-width="3" fill="none" class="ms-an-draw"/>
+      <circle cx="150" cy="45" r="6" fill="currentColor" class="ms-an-pop"/>
+    </svg>`,
+    sumif: `<svg viewBox="0 0 300 120">
+      <text x="30" y="45" fill="currentColor" font-size="20" font-weight="900">=SUMIF(</text>
+      <text x="30" y="75" fill="currentColor" font-size="14" font-weight="700" opacity=".8">A:A,"HR",</text>
+      <text x="30" y="100" fill="currentColor" font-size="14" font-weight="700" opacity=".8">B:B)</text>
+      <path d="M200 60 L240 60" stroke="currentColor" stroke-width="3" class="ms-an-fade"/>
+      <circle cx="260" cy="60" r="18" fill="currentColor" opacity=".8" class="ms-an-pop"/>
+      <text x="260" y="66" text-anchor="middle" fill="#fff" font-size="12" font-weight="900">Σ</text>
+    </svg>`,
+    pivot: `<svg viewBox="0 0 300 120">
+      <rect x="30" y="20" width="130" height="80" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+      <line x1="30" y1="45" x2="160" y2="45" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="80" y1="20" x2="80" y2="100" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="120" y1="20" x2="120" y2="100" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M160 60 L190 60" stroke="currentColor" stroke-width="3" class="ms-an-fade"/>
+      <rect x="195" y="30" width="75" height="60" rx="3" fill="currentColor" opacity=".3" class="ms-an-fade"/>
+    </svg>`,
+    cond: `<svg viewBox="0 0 300 120">
+      <rect x="30" y="20" width="70" height="30" rx="3" fill="#217346" opacity=".8"/>
+      <rect x="105" y="20" width="70" height="30" rx="3" fill="#d4af37" opacity=".8"/>
+      <rect x="180" y="20" width="90" height="30" rx="3" fill="#e31e24" opacity=".8"/>
+      <text x="65" y="40" text-anchor="middle" fill="#fff" font-size="10" font-weight="800">HIGH</text>
+      <text x="140" y="40" text-anchor="middle" fill="#fff" font-size="10" font-weight="800">MED</text>
+      <text x="225" y="40" text-anchor="middle" fill="#fff" font-size="10" font-weight="800">LOW</text>
+      <rect x="30" y="65" width="240" height="30" rx="3" fill="currentColor" opacity=".2"/>
+    </svg>`,
+    dyn: `<svg viewBox="0 0 300 120">
+      <rect x="30" y="30" width="60" height="20" rx="3" fill="currentColor" opacity=".8"/>
+      <rect x="95" y="30" width="60" height="20" rx="3" fill="currentColor" opacity=".6"/>
+      <rect x="160" y="30" width="60" height="20" rx="3" fill="currentColor" opacity=".4"/>
+      <rect x="225" y="30" width="40" height="20" rx="3" fill="currentColor" opacity=".2" class="ms-an-fade"/>
+      <text x="150" y="85" text-anchor="middle" fill="currentColor" font-size="13" font-weight="800">=FILTER(...)</text>
+    </svg>`,
+    plan: `<svg viewBox="0 0 300 120">
+      <circle cx="60" cy="60" r="20" fill="currentColor" opacity=".9"/>
+      <path d="M90 60 L120 60" stroke="currentColor" stroke-width="3"/>
+      <circle cx="150" cy="60" r="20" fill="currentColor" opacity=".6"/>
+      <path d="M180 60 L210 60" stroke="currentColor" stroke-width="3"/>
+      <circle cx="240" cy="60" r="20" fill="currentColor" opacity=".3"/>
+      <text x="60" y="66" text-anchor="middle" fill="#fff" font-size="12" font-weight="900">1</text>
+      <text x="150" y="66" text-anchor="middle" fill="#fff" font-size="12" font-weight="900">2</text>
+      <text x="240" y="66" text-anchor="middle" fill="#fff" font-size="12" font-weight="900">3</text>
+    </svg>`,
+    design: `<svg viewBox="0 0 300 120">
+      <rect x="40" y="30" width="90" height="50" rx="3" fill="currentColor" opacity=".8"/>
+      <text x="85" y="60" text-anchor="middle" fill="#fff" font-size="14" font-weight="900">Title</text>
+      <rect x="150" y="30" width="90" height="50" rx="3" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="195" y="60" text-anchor="middle" fill="currentColor" font-size="11" font-weight="700" opacity=".6">Bullets</text>
+    </svg>`,
+    master: `<svg viewBox="0 0 300 120">
+      <rect x="40" y="25" width="220" height="70" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <rect x="40" y="25" width="220" height="15" fill="currentColor" opacity=".3"/>
+      <text x="150" y="36" text-anchor="middle" fill="#fff" font-size="9" font-weight="900">SLIDE MASTER</text>
+      <rect x="50" y="50" width="100" height="6" rx="2" fill="currentColor" opacity=".6"/>
+      <rect x="50" y="65" width="80" height="4" rx="2" fill="currentColor" opacity=".4"/>
+      <rect x="50" y="78" width="90" height="4" rx="2" fill="currentColor" opacity=".4"/>
+    </svg>`,
+    chart2: `<svg viewBox="0 0 300 120">
+      <g class="ms-an-bar"><rect x="50" y="45" width="18" height="45" fill="currentColor" opacity=".8"/></g>
+      <g class="ms-an-bar" style="animation-delay:.3s"><rect x="80" y="30" width="18" height="60" fill="currentColor" opacity=".7"/></g>
+      <g class="ms-an-bar" style="animation-delay:.6s"><rect x="110" y="55" width="18" height="35" fill="currentColor" opacity=".6"/></g>
+      <circle cx="200" cy="60" r="30" fill="currentColor" opacity=".7" class="ms-an-pop"/>
+      <path d="M200 60 L200 30 A30 30 0 0 1 230 60 Z" fill="currentColor" opacity=".3"/>
+    </svg>`,
+    anim: `<svg viewBox="0 0 300 120">
+      <rect x="30" y="30" width="80" height="60" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <path d="M115 60 L145 60" stroke="currentColor" stroke-width="3" class="ms-an-fade"/>
+      <rect x="155" y="30" width="80" height="60" rx="4" fill="currentColor" opacity=".3" class="ms-an-fade"/>
+      <text x="195" y="65" text-anchor="middle" fill="currentColor" font-size="12" font-weight="800" opacity=".7">Morph</text>
+    </svg>`,
+    present: `<svg viewBox="0 0 300 120">
+      <circle cx="150" cy="60" r="35" fill="none" stroke="currentColor" stroke-width="3"/>
+      <circle cx="150" cy="60" r="20" fill="currentColor" opacity=".3" class="ms-an-pop"/>
+      <path d="M150 25 L150 15 M150 105 L150 95 M185 60 L195 60 M115 60 L105 60" stroke="currentColor" stroke-width="3"/>
+      <circle cx="150" cy="60" r="5" fill="currentColor" class="ms-an-blink"/>
+    </svg>`,
+    email: `<svg viewBox="0 0 300 120">
+      <rect x="40" y="30" width="220" height="60" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <path d="M40 40 L150 75 L260 40" fill="none" stroke="currentColor" stroke-width="2.5" class="ms-an-draw"/>
+      <text x="150" y="108" text-anchor="middle" fill="currentColor" font-size="11" font-weight="800">Subject → Action → Sign-off</text>
+    </svg>`,
+    inbox: `<svg viewBox="0 0 300 120">
+      <rect x="30" y="40" width="240" height="70" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <path d="M30 55 L90 70 L90 40 M270 55 L210 70 L210 40" fill="none" stroke="currentColor" stroke-width="2.5" class="ms-an-fade"/>
+      <rect x="95" y="55" width="110" height="3" fill="currentColor" opacity=".5"/>
+      <rect x="95" y="65" width="80" height="3" fill="currentColor" opacity=".4"/>
+      <rect x="95" y="75" width="100" height="3" fill="currentColor" opacity=".4"/>
+    </svg>`,
+    search: `<svg viewBox="0 0 300 120">
+      <circle cx="120" cy="55" r="28" fill="none" stroke="currentColor" stroke-width="4" class="ms-an-pop"/>
+      <line x1="142" y1="77" x2="180" y2="112" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+      <text x="220" y="60" fill="currentColor" font-size="14" font-weight="900">Ctrl+E</text>
+    </svg>`,
+    cal: `<svg viewBox="0 0 300 120">
+      <rect x="60" y="30" width="180" height="80" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <line x1="60" y1="55" x2="240" y2="55" stroke="currentColor" stroke-width="2"/>
+      <rect x="60" y="30" width="180" height="25" fill="currentColor" opacity=".2"/>
+      <rect x="80" y="70" width="30" height="20" rx="2" fill="currentColor" opacity=".7" class="ms-an-fade"/>
+      <rect x="120" y="70" width="30" height="20" rx="2" fill="currentColor" opacity=".4"/>
+      <rect x="160" y="70" width="30" height="20" rx="2" fill="currentColor" opacity=".4"/>
+      <rect x="80" y="95" width="30" height="10" rx="2" fill="currentColor" opacity=".4"/>
+    </svg>`,
+    sig: `<svg viewBox="0 0 300 120">
+      <rect x="40" y="25" width="220" height="70" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+      <text x="60" y="50" fill="currentColor" font-size="11" font-weight="700">Best regards,</text>
+      <text x="60" y="68" fill="currentColor" font-size="12" font-weight="900">Your Name</text>
+      <text x="60" y="82" fill="currentColor" font-size="9" opacity=".6">Role · Company · +94 7X XXX XXXX</text>
+    </svg>`,
+    teams: `<svg viewBox="0 0 300 120">
+      <circle cx="90" cy="60" r="20" fill="currentColor" opacity=".8"/>
+      <circle cx="150" cy="45" r="16" fill="currentColor" opacity=".6"/>
+      <circle cx="150" cy="80" r="16" fill="currentColor" opacity=".6"/>
+      <circle cx="210" cy="60" r="20" fill="currentColor" opacity=".8"/>
+      <path d="M110 60 L135 60 M165 55 L190 55 M165 70 L190 70" stroke="currentColor" stroke-width="2" class="ms-an-fade"/>
+    </svg>`,
+    cloud: `<svg viewBox="0 0 300 120">
+      <path d="M100 75 Q80 75 80 60 Q80 45 100 45 Q105 25 130 25 Q160 25 165 50 Q190 50 190 70 Q190 85 170 85 L110 85 Q95 85 95 75" fill="currentColor" opacity=".3" class="ms-an-float"/>
+      <path d="M100 75 Q80 75 80 60 Q80 45 100 45 Q105 25 130 25 Q160 25 165 50 Q190 50 190 70 Q190 85 170 85 L110 85 Q95 85 95 75" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <path d="M130 60 L130 80 M130 80 L122 72 M130 80 L138 72" stroke="currentColor" stroke-width="2" fill="none" class="ms-an-fade"/>
+    </svg>`,
+    note: `<svg viewBox="0 0 300 120">
+      <rect x="60" y="25" width="180" height="80" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <line x1="60" y1="45" x2="240" y2="45" stroke="currentColor" stroke-width="2"/>
+      <circle cx="80" cy="35" r="4" fill="currentColor"/>
+      <circle cx="100" cy="35" r="4" fill="currentColor" opacity=".6"/>
+      <circle cx="120" cy="35" r="4" fill="currentColor" opacity=".4"/>
+      <rect x="75" y="60" width="150" height="3" fill="currentColor" opacity=".5"/>
+      <rect x="75" y="72" width="120" height="3" fill="currentColor" opacity=".4"/>
+      <rect x="75" y="84" width="140" height="3" fill="currentColor" opacity=".4"/>
+    </svg>`,
+    forms: `<svg viewBox="0 0 300 120">
+      <rect x="70" y="25" width="160" height="80" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <rect x="90" y="40" width="15" height="15" rx="2" fill="currentColor" class="ms-an-pop"/>
+      <rect x="115" y="45" width="95" height="4" fill="currentColor" opacity=".5"/>
+      <rect x="90" y="65" width="15" height="15" rx="2" fill="currentColor" opacity=".6"/>
+      <rect x="115" y="70" width="95" height="4" fill="currentColor" opacity=".5"/>
+      <rect x="90" y="90" width="15" height="15" rx="2" fill="currentColor" opacity=".3"/>
+      <rect x="115" y="95" width="95" height="4" fill="currentColor" opacity=".5"/>
+    </svg>`,
+    phish: `<svg viewBox="0 0 300 120">
+      <path d="M100 60 Q100 35 130 35 Q160 35 160 60" fill="none" stroke="currentColor" stroke-width="3"/>
+      <text x="130" y="90" text-anchor="middle" fill="currentColor" font-size="14" font-weight="900" class="ms-an-blink">⚠</text>
+      <text x="200" y="55" fill="currentColor" font-size="11" font-weight="700">No click</text>
+      <text x="200" y="72" fill="currentColor" font-size="11" font-weight="700">Report</text>
+    </svg>`,
+    lock: `<svg viewBox="0 0 300 120">
+      <rect x="110" y="55" width="80" height="50" rx="6" fill="currentColor" opacity=".7"/>
+      <path d="M125 55 L125 40 Q125 20 150 20 Q175 20 175 40 L175 55" fill="none" stroke="currentColor" stroke-width="4"/>
+      <circle cx="150" cy="80" r="5" fill="#fff"/>
+    </svg>`,
+    doclock: `<svg viewBox="0 0 300 120">
+      <rect x="90" y="25" width="80" height="80" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <rect x="105" y="45" width="50" height="35" rx="4" fill="currentColor" opacity=".8"/>
+      <path d="M115 45 L115 35 Q115 22 130 22 Q145 22 145 35 L145 45" fill="none" stroke="currentColor" stroke-width="3"/>
+      <circle cx="130" cy="62" r="4" fill="#fff"/>
+    </svg>`,
+    macro: `<svg viewBox="0 0 300 120">
+      <text x="150" y="65" text-anchor="middle" fill="currentColor" font-size="20" font-weight="900" class="ms-an-blink">⚠ MACRO</text>
+      <text x="150" y="95" text-anchor="middle" fill="currentColor" font-size="11" font-weight="700" opacity=".7">Enable only if trusted</text>
+    </svg>`,
+    privacy: `<svg viewBox="0 0 300 120">
+      <circle cx="150" cy="60" r="38" fill="none" stroke="currentColor" stroke-width="3"/>
+      <text x="150" y="66" text-anchor="middle" fill="currentColor" font-size="14" font-weight="900">GDPR</text>
+      <circle cx="150" cy="60" r="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3" class="ms-an-fade"/>
+    </svg>`,
+    check: `<svg viewBox="0 0 300 120">
+      <circle cx="150" cy="60" r="35" fill="none" stroke="currentColor" stroke-width="3"/>
+      <path d="M130 60 L145 75 L175 45" fill="none" stroke="currentColor" stroke-width="4" class="ms-an-draw"/>
+    </svg>`,
+    time: `<svg viewBox="0 0 300 120">
+      <circle cx="150" cy="60" r="38" fill="none" stroke="currentColor" stroke-width="3"/>
+      <line x1="150" y1="60" x2="150" y2="35" stroke="currentColor" stroke-width="3" class="ms-an-draw"/>
+      <line x1="150" y1="60" x2="170" y2="70" stroke="currentColor" stroke-width="3" class="ms-an-draw"/>
+      <circle cx="150" cy="60" r="4" fill="currentColor"/>
+    </svg>`,
+    collab: `<svg viewBox="0 0 300 120">
+      <circle cx="110" cy="55" r="18" fill="currentColor" opacity=".8"/>
+      <circle cx="190" cy="55" r="18" fill="currentColor" opacity=".6"/>
+      <path d="M130 55 Q150 40 170 55" stroke="currentColor" stroke-width="3" fill="none" class="ms-an-fade"/>
+      <text x="150" y="105" text-anchor="middle" fill="currentColor" font-size="12" font-weight="800">Track · Comment</text>
+    </svg>`,
+    style: `<svg viewBox="0 0 300 120">
+      <text x="150" y="45" text-anchor="middle" fill="currentColor" font-size="16" font-weight="900" class="ms-an-fade">Active voice</text>
+      <text x="150" y="70" text-anchor="middle" fill="currentColor" font-size="12" opacity=".7" class="ms-an-fade" style="animation-delay:.4s">Short sentences</text>
+      <text x="150" y="92" text-anchor="middle" fill="currentColor" font-size="11" opacity=".6" class="ms-an-fade" style="animation-delay:.8s">Front-load information</text>
+    </svg>`
+  };
+  return `<div class="ms-visual" style="--ms-c:${color}">${badge}${styles[kind] || styles.grid}</div>`;
+}
+
+/* ---------- EXAM ---------- */
+function renderExamShell(){
+  return `<div class="ms-exam" id="msExamBox"></div>`;
+}
+function renderExamIntro(){
+  document.getElementById('msExamBox').innerHTML = `
+    <div class="ms-exam-head">
+      <div class="ms-ic">📝</div>
+      <div><h2>${tt('examTitle')}</h2>
+      <p>${tt('examSub')}</p></div>
+    </div>
+    <p style="font-size:14.5px;line-height:1.7">${tt('examIntro')}</p>
+    <div style="display:grid;gap:8px;margin:16px 0;font-size:14px">
+      <div style="display:flex;gap:10px;align-items:center;padding:9px 14px;border-radius:10px;background:color-mix(in srgb,#1a8f4d 10%,transparent);border-left:4px solid #1a8f4d"><b style="min-width:42px">DP</b> ${tt('gDP')}</div>
+      <div style="display:flex;gap:10px;align-items:center;padding:9px 14px;border-radius:10px;background:color-mix(in srgb,#2b579a 10%,transparent);border-left:4px solid #2b579a"><b style="min-width:42px">MP</b> ${tt('gMP')}</div>
+      <div style="display:flex;gap:10px;align-items:center;padding:9px 14px;border-radius:10px;background:color-mix(in srgb,#d4af37 14%,transparent);border-left:4px solid #d4af37"><b style="min-width:42px">OP</b> ${tt('gOP')}</div>
+      <div style="display:flex;gap:10px;align-items:center;padding:9px 14px;border-radius:10px;background:color-mix(in srgb,#e31e24 10%,transparent);border-left:4px solid #e31e24"><b style="min-width:42px">F</b> ${tt('gF')}</div>
+    </div>
+    <div class="ms-exam-foot" style="justify-content:flex-end">
+      <button class="ms-nav-btn on" onclick="msStartExam()" type="button" style="padding:12px 24px;font-size:14px">${tt('start')}</button>
+    </div>`;
+}
+function msStartExam(){
+  MS_STATE.exam = { started:true, current:0, answers:new Array(MS_EXAM.length).fill(-1), score:0, finished:false };
+  renderExamQuestion();
+}
+function renderExamQuestion(){
+  const e = MS_STATE.exam;
+  const q = qOf(e.current);
+  const box = document.getElementById('msExamBox');
+  const total = MS_EXAM.length;
+  const pct = (e.current / total) * 100;
+  box.innerHTML = `
+    <div class="ms-exam-head">
+      <div class="ms-ic">📝</div>
+      <div><h2>${tt('qHead',{i:e.current+1,n:total})}</h2>
+      <p>${tt('examName')}</p></div>
+    </div>
+    <div class="ms-exam-progress"><i style="width:${pct}%"></i></div>
+    <div class="ms-q"><span class="qn">Q${e.current+1}</span>${q.q}</div>
+    ${q.opts.map((o, i) => `<button class="ms-opt" data-idx="${i}" onclick="msAnswer(${i})" type="button">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}
+    <div class="ms-exam-foot">
+      <span class="ctr">${e.answers[e.current] > -1 ? tt('selected') : tt('choose')}</span>
+      <div style="display:flex;gap:8px">
+        ${e.current > 0 ? `<button class="ms-nav-btn" onclick="msExamPrev()" type="button">${tt('back')}</button>` : ''}
+        <button class="ms-nav-btn on" id="msNextBtn" onclick="msExamNext()" type="button" ${e.answers[e.current] === -1 ? 'disabled style="opacity:.5;cursor:not-allowed"' : ''}>${e.current === total-1 ? tt('finish') : tt('nextQ')}</button>
+      </div>
+    </div>`;
+  document.querySelectorAll('#msExamBox .ms-opt').forEach(b => {
+    if(+b.dataset.idx === e.answers[e.current]) b.classList.add('sel');
+  });
+}
+function msAnswer(i){
+  MS_STATE.exam.answers[MS_STATE.exam.current] = i;
+  document.querySelectorAll('#msExamBox .ms-opt').forEach(b => b.classList.remove('sel'));
+  document.querySelector(`#msExamBox .ms-opt[data-idx="${i}"]`).classList.add('sel');
+  const btn = document.getElementById('msNextBtn');
+  if(btn){ btn.disabled = false; btn.style.opacity = ''; btn.style.cursor = ''; }
+  document.querySelector('#msExamBox .ctr').textContent = tt('selected');
+}
+function msExamPrev(){
+  if(MS_STATE.exam.current > 0){ MS_STATE.exam.current--; renderExamQuestion(); }
+}
+function msExamNext(){
+  const e = MS_STATE.exam;
+  if(e.answers[e.current] === -1) return;
+  if(e.current === MS_EXAM.length - 1){ msFinishExam(); }
+  else { e.current++; renderExamQuestion(); }
+}
+function msFinishExam(){
+  const e = MS_STATE.exam;
+  let score = 0;
+  MS_EXAM.forEach((q, i) => { if(e.answers[i] === q.a) score++; });
+  e.rawScore = score;
+  const pct = Math.round(score / MS_EXAM.length * 100);
+  e.score = pct;
+  e.finished = true;
+  MS_STATE.cert.score = pct;
+  MS_STATE.cert.grade = pct >= 80 ? 'DP' : pct >= 65 ? 'MP' : pct >= 40 ? 'OP' : 'F';
+  MS_STATE.cert.date = new Date().toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'});
+  msSave();
+  msShowResult();
+}
+function msShowResult(){
+  const e = MS_STATE.exam, g = MS_STATE.cert.grade, pct = MS_STATE.cert.score;
+  const raw = e.rawScore!=null ? e.rawScore : Math.round(pct*MS_EXAM.length/100);
+  const box = document.getElementById('msExamBox');
+  box.innerHTML = `
+    <div class="ms-result g-${g}">
+      <div class="grade-badge">${g}</div>
+      <h2>${tt(g)}</h2>
+      <div class="gname">${tt('grade')}: ${g}</div>
+      <div class="gscore">${tt('scored')} <b>${pct}%</b> (${raw} / ${MS_EXAM.length})</div>
+      <div class="gbtns">
+        <button onclick="msRetakeExam()" type="button">${tt('retake')}</button>
+        ${g !== 'F' ? `<button class="primary" onclick="msGoCert()" type="button">${tt('viewCert')}</button>` : ''}
+        <button onclick="msNav('home')" type="button">${tt('backLearn')}</button>
+      </div>
+      ${g === 'F' ? `<div class="ms-warn" style="margin-top:18px;text-align:left">${tt('failNote')}</div>` : ''}
+    </div>`;
+}
+function msRetakeExam(){
+  MS_STATE.exam = { started:false, current:0, answers:[], score:0, finished:false };
+  MS_STATE.cert = { name:'', score:0, grade:'', date:'' };
+  try{ localStorage.removeItem(MS_KEY); }catch(e){}
+  renderExamIntro();
+}
+
+/* ---------- CERTIFICATE ---------- */
+function renderCertTab(){
+  const grade = MS_STATE.cert.grade;
+  if(!grade || grade === 'F'){
+    return `<div class="ms-exam" style="text-align:center;padding:40px 20px">
+      <div style="font-size:56px;margin-bottom:14px">🏆</div>
+      <h2 style="margin:0 0 8px">${tt('lockTitle')}</h2>
+      <p class="mu" style="max-width:420px;margin:0 auto 22px">${tt('lockDesc')}</p>
+      <button class="ms-nav-btn on" onclick="msNav('exam')" type="button" style="padding:12px 24px;font-size:14px">${tt('takeExam')}</button>
+    </div>`;
+  }
+  const pre = MS_STATE.cert.name || (window.S && window.S.nm) || '';
+  return `<div class="ms-exam">
+    <div class="ms-exam-head">
+      <div class="ms-ic">🏆</div>
+      <div><h2>${tt('certHead')}</h2>
+      <p>${tt('grade')}: ${grade} · ${tt(grade)} · ${MS_STATE.cert.score}%</p></div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+      <label style="display:block;font-weight:600;font-size:13px;margin:0;flex:1;min-width:220px">${tt('fullName')}
+        <input id="msCertName" type="text" value="${esc(pre)}" placeholder="${tt('ph')}" style="margin-top:6px;width:100%;padding:11px 13px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit"/>
+      </label>
+      <button class="ms-nav-btn on" onclick="msBuildCert()" type="button" style="align-self:flex-end;padding:11px 20px">${tt('gen')}</button>
+    </div>
+    <div id="msCertArea" style="overflow-x:auto;padding:8px 0"></div>
+  </div>`;
+}
+function msGoCert(){ msNav('cert'); }
+function msBuildCert(keep){
+  const inp = document.getElementById('msCertName');
+  const name = ((inp && inp.value) || MS_STATE.cert.name || '').trim() || tt('defName');
+  MS_STATE.cert.name = name; msSave();
+  const c = MS_STATE.cert;
+  const serial = 'MS-' + Date.now().toString(36).toUpperCase().slice(-8);
+  const area = document.getElementById('msCertArea');
+  if(!area) return;
+  if(inp && !inp.value) inp.value = name;
+  area.innerHTML = `
+    <div id="msCertWrap">
+      <div class="ms-cert">
+        <div class="outer-border"></div>
+        <div class="inner-border"></div>
+        <div class="content">
+          <div class="academy">DIGITAL CULTURE ACADEMY</div>
+          <div class="dca-logo">DCA<span>·</span></div>
+          <div class="top-line"></div>
+          <div class="level">${tt('cLevel')}</div>
+          <div class="title">${tt('cTitle')}</div>
+          <div class="subtitle">${tt('cSub')}</div>
+          <div class="presented">${tt('cPres')}</div>
+          <div class="employee-name">${esc(name)}</div>
+          <div class="description">${tt('cDesc')}</div>
+          <div class="grade-line">
+            <div class="g-item"><div class="k">${tt('lGrade')}</div><div class="v ${c.grade.toLowerCase()}">${c.grade}</div></div>
+            <div class="g-item"><div class="k">${tt('lResult')}</div><div class="v ${c.grade.toLowerCase()}">${tt(c.grade)}</div></div>
+            <div class="g-item"><div class="k">${tt('lScore')}</div><div class="v">${c.score}%</div></div>
+            <div class="g-item"><div class="k">${tt('lDate')}</div><div class="v" style="font-size:16px;color:#555">${c.date}</div></div>
+          </div>
+          <div class="training">
+            <div class="training-item">Word</div>
+            <div class="training-item">Excel</div>
+            <div class="training-item">PowerPoint</div>
+            <div class="training-item">Outlook</div>
+            <div class="training-item">Teams</div>
+            <div class="training-item">${tt('iSec')}</div>
+            <div class="training-item">${tt('iPro')}</div>
+          </div>
+          <div class="footer">
+            <div class="signature"><div class="signature-line"></div><h4>${tt('sig1')}</h4><p>Digital Culture Academy</p></div>
+            <div class="signature"><div class="signature-line"></div><h4>${tt('sig2')}</h4><p>Digital Culture Academy</p></div>
+          </div>
+          <div class="seal">${tt('seal')}</div>
+          <div class="serial">${tt('serial')}: ${serial}</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="ms-nav-btn on" onclick="msPrintCert()" type="button">${tt('print')}</button>
+      <button class="ms-nav-btn" onclick="msBuildCert()" type="button">${tt('regen')}</button>
+    </div>`;
+  var w = document.getElementById('msCertWrap');
+  var sc = Math.min(1, (area.clientWidth || (window.innerWidth - 60)) / 1123);
+  w.style.transform = 'scale(' + sc + ')';
+  area.style.height = (794 * sc + 70) + 'px';
+}
+function msPrintCert(){
+  document.body.classList.add('ms-printing');
+  window.print();
+  setTimeout(() => document.body.classList.remove('ms-printing'), 800);
+}
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ---------- home-page tool card (called by the page's renderGrid) ---------- */
+window.msCardHtml = function(){
+  var done = MS_STATE.cert.grade && MS_STATE.cert.grade!=='F';
+  return '<div class="ic">📘</div><h3>Microsoft Office</h3>'
+    +'<div class="mu" style="font-size:13px">'+tt('cardSub')+'</div>'
+    +'<div class="ways">'+(done?'<span class="chip" style="background:var(--ok);color:#fff">'+tt('cardDone')+' '+MS_STATE.cert.grade+'</span>':'')+'</div>'
+    +'<div class="bar"><i style="width:'+(done?100:0)+'%"></i></div>';
+};
+
+/* ---------- expose to global ---------- */
+window.msOpen = msOpen;
+window.msClose = msClose;
+window.msNav = msNav;
+window.msLang = msLang;
+window.msRefresh = msRefresh;
+window.msOpenCat = msOpenCat;
+window.msOpenSub = msOpenSub;
+window.msStartExam = msStartExam;
+window.msAnswer = msAnswer;
+window.msExamPrev = msExamPrev;
+window.msExamNext = msExamNext;
+window.msFinishExam = msFinishExam;
+window.msRetakeExam = msRetakeExam;
+window.msGoCert = msGoCert;
+window.msBuildCert = msBuildCert;
+window.msPrintCert = msPrintCert;
+
+/* keep module in step when the page language changes, Esc closes */
+document.querySelectorAll('.lang button').forEach(function(b){
+  b.addEventListener('click', function(){ setTimeout(msRefresh, 0); });
+});
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape'){
+    const ov = document.getElementById('msOverlay');
+    if(ov && !ov.classList.contains('hide')) msClose();
+  }
+});
+msApplyStatic();
+
+})();
+
 </script>
 </body>
 </html>
